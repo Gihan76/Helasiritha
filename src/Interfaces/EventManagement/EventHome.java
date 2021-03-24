@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.TableCellRenderer;
@@ -29,6 +30,7 @@ public class EventHome extends javax.swing.JFrame {
     Connection con = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
+    String defaultTime = "00:00:00";
 
     /**
      * Creates new form EventHome
@@ -394,6 +396,12 @@ public class EventHome extends javax.swing.JFrame {
             jComboBoxEvent.setSelectedIndex(0);
             jTextAreaAddress.setText(null);
             jXDatePicker1.setDate(null);
+            //set jspinner1 value to 00:00:00
+            Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+            jSpinner1.setValue(StartTime);
+            //set jspinner2 value to 00:00:00
+            Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+            jSpinner2.setValue(EndTime);
             jComboBoxOrder.setSelectedIndex(0);
         } catch (Exception e) {
             System.out.println(e);
@@ -401,7 +409,52 @@ public class EventHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        // TODO add your handling code here:
+        
+        String Id = jLabelIdValue.getText();
+        int x = JOptionPane.showConfirmDialog(null,"You are about to update Event "+Id+". Are you Sure?");
+        
+        if(x == 0){
+            String Type = jComboBoxEvent.getSelectedItem().toString();
+            String Address = jTextAreaAddress.getText();
+            //--------------------converting date format----------------------------
+            Date Date = jXDatePicker1.getDate();      
+            DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String FormatedDate = DateFormat.format(Date);
+            //----------------converting starting time format-----------------------
+            SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
+            String STime = TimeFormat.format(jSpinner1.getValue());
+            //----------------converting ending time format-------------------------
+            SimpleDateFormat TimeFormat1 = new SimpleDateFormat("HH:mm:ss");
+            String ETime = TimeFormat1.format(jSpinner2.getValue());
+            String Order = jComboBoxOrder.getSelectedItem().toString();
+            
+            try {
+                String updateEvent = "UPDATE event SET id='"+Id+"',type='"+Type+"',address='"+Address+"',date='"+FormatedDate+"',start_time='"+STime+"',end_time='"+ETime+"',order_id='"+Order+"' WHERE id='"+Id+"'";
+                preparedStatement = con.prepareStatement(updateEvent);
+                preparedStatement.execute();
+                
+                //refresh table
+                tableloadView();
+                tableloadManage();
+                //set field values null
+                jComboBoxEvent.setSelectedIndex(0);
+                jTextAreaAddress.setText(null);
+                jXDatePicker1.setDate(null);
+                //set jspinner1 value to 00:00:00
+                Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner1.setValue(StartTime);
+                //set jspinner2 value to 00:00:00
+                Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner2.setValue(EndTime);
+                jComboBoxOrder.setSelectedIndex(0);
+                //show success message
+                JOptionPane.showMessageDialog(null,"Event "+Id+" Updated Successfully!");
+            } 
+            catch (Exception e) {
+                System.out.println(e);  
+            } 
+        }
+        
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
@@ -412,7 +465,6 @@ public class EventHome extends javax.swing.JFrame {
         
         //--------------------selecting row of the table------------------------
         int row = jTable2.getSelectedRow();
-        
         //--------------assigning values of the row to variables----------------
         String Id = jTable2.getValueAt(row, 0).toString();
         String Type = jTable2.getValueAt(row, 1).toString();
@@ -421,7 +473,6 @@ public class EventHome extends javax.swing.JFrame {
         String Start_time = jTable2.getValueAt(row, 4).toString();
         String End_time = jTable2.getValueAt(row, 5).toString();
         String Order_id = jTable2.getValueAt(row, 6).toString();
-        
         //-----------------------setting values to fields-----------------------
         jLabelIdValue.setText(Id);
         jComboBoxEvent.setSelectedItem(Type);
@@ -449,7 +500,6 @@ public class EventHome extends javax.swing.JFrame {
         }
         jComboBoxOrder.setSelectedItem(Order_id);
          
-        
     }//GEN-LAST:event_jTable2MouseClicked
 
     /**
