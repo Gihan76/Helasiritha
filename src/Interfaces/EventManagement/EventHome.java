@@ -36,22 +36,22 @@ public class EventHome extends javax.swing.JFrame {
     public EventHome() {
         initComponents();
         
-        //set the JFrame to maximize by default on opening
+        //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        //jtable header font size
+        //-------------------jtable header font size----------------------------
         jTable1.getTableHeader().setFont(new Font("Perpetua", Font.BOLD, 18));
-        jTable1.setRowHeight(30);
+        jTable1.setRowHeight(50);
         jTable2.getTableHeader().setFont(new Font("Perpetua", Font.BOLD, 18));
         jTable2.setRowHeight(30);
-        //DB connect
+        //--------------------------DB connect----------------------------------
         con = DBconnect.connect();
-        //tabeload
-        tableload();
-        tableload1();
+        //---------------------------tabeload-----------------------------------
+        tableloadView();
+        tableloadManage();
         
     }
     
-    public void tableload(){
+    public void tableloadView(){
         try {
             String sql = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event";
             preparedStatement = con.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class EventHome extends javax.swing.JFrame {
         }
     }
     
-    public void tableload1(){
+    public void tableloadManage(){
         try {
             String sql = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event";
             preparedStatement = con.prepareStatement(sql);
@@ -115,6 +115,7 @@ public class EventHome extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jButtonUpdate = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
+        jLabelIdValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -226,6 +227,11 @@ public class EventHome extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTable2);
 
         jButtonUpdate.setBackground(java.awt.Color.orange);
@@ -247,39 +253,41 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
+        jLabelIdValue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelIdValue.setText("Event ID");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(37, 37, 37)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBoxOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                                .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelIdValue)
+                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jXDatePicker1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)))
+                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
         );
@@ -290,8 +298,10 @@ public class EventHome extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelIdValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -321,7 +331,7 @@ public class EventHome extends javax.swing.JFrame {
                                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addContainerGap(406, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage", jPanel2);
@@ -361,14 +371,14 @@ public class EventHome extends javax.swing.JFrame {
         
         String Type = jComboBoxEvent.getSelectedItem().toString();
         String Address = jTextAreaAddress.getText();
-        //converting date format
+        //--------------------converting date format----------------------------
         Date Date = jXDatePicker1.getDate();      
         DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String FormatedDate = DateFormat.format(Date);
-        //converting starting time format
+        //----------------converting starting time format-----------------------
         SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
         String STime = TimeFormat.format(jSpinner1.getValue());
-        //converting ending time format
+        //----------------converting ending time format-------------------------
         SimpleDateFormat TimeFormat1 = new SimpleDateFormat("HH:mm:ss");
         String ETime = TimeFormat1.format(jSpinner2.getValue());
         String Order = jComboBoxOrder.getSelectedItem().toString();
@@ -378,8 +388,13 @@ public class EventHome extends javax.swing.JFrame {
             preparedStatement = con.prepareStatement(addEvent);
             preparedStatement.execute();
             //refresh table
-            tableload();
-            tableload1();
+            tableloadView();
+            tableloadManage();
+            //set field values null
+            jComboBoxEvent.setSelectedIndex(0);
+            jTextAreaAddress.setText(null);
+            jXDatePicker1.setDate(null);
+            jComboBoxOrder.setSelectedIndex(0);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -392,6 +407,50 @@ public class EventHome extends javax.swing.JFrame {
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        
+        //--------------------selecting row of the table------------------------
+        int row = jTable2.getSelectedRow();
+        
+        //--------------assigning values of the row to variables----------------
+        String Id = jTable2.getValueAt(row, 0).toString();
+        String Type = jTable2.getValueAt(row, 1).toString();
+        String Address = jTable2.getValueAt(row, 2).toString();
+        String Date = jTable2.getValueAt(row, 3).toString();
+        String Start_time = jTable2.getValueAt(row, 4).toString();
+        String End_time = jTable2.getValueAt(row, 5).toString();
+        String Order_id = jTable2.getValueAt(row, 6).toString();
+        
+        //-----------------------setting values to fields-----------------------
+        jLabelIdValue.setText(Id);
+        jComboBoxEvent.setSelectedItem(Type);
+        jTextAreaAddress.setText(Address);
+        //---setting date to jxdatepicker---
+        try {
+            Date dateFormat = new SimpleDateFormat("yyyy-MM-dd").parse(Date);
+            jXDatePicker1.setDate(dateFormat);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        //---setting time to jspinner1---
+        try {
+            Date STime = new SimpleDateFormat("HH:mm:ss").parse(Start_time);
+            jSpinner1.setValue(STime);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        //---setting time to jspinner2---
+        try {
+            Date ETime = new SimpleDateFormat("HH:mm:ss").parse(End_time);
+            jSpinner2.setValue(ETime);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        jComboBoxOrder.setSelectedItem(Order_id);
+         
+        
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -439,6 +498,7 @@ public class EventHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelEndTime;
     private javax.swing.JLabel jLabelId;
+    private javax.swing.JLabel jLabelIdValue;
     private javax.swing.JLabel jLabelOrder;
     private javax.swing.JLabel jLabelStartTime;
     private javax.swing.JLabel jLabelType;
