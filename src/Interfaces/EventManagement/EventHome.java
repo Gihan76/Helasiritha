@@ -54,6 +54,7 @@ public class EventHome extends javax.swing.JFrame {
     }
     
     public void tableloadView(){
+        
         try {
             String sql = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event";
             preparedStatement = con.prepareStatement(sql);
@@ -63,9 +64,11 @@ public class EventHome extends javax.swing.JFrame {
         catch (Exception e) {
             System.out.println(e);
         }
+        
     }
     
     public void tableloadManage(){
+        
         try {
             String sql = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event";
             preparedStatement = con.prepareStatement(sql);
@@ -75,6 +78,7 @@ public class EventHome extends javax.swing.JFrame {
         catch (Exception e) {
             System.out.println(e);
         }
+        
     }
 
     /**
@@ -406,12 +410,13 @@ public class EventHome extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         
         String Id = jLabelIdValue.getText();
-        int x = JOptionPane.showConfirmDialog(null,"You are about to update Event "+Id+". Are you Sure?");
+        int x = JOptionPane.showConfirmDialog(null,"You are about to Update Event "+Id+". Are you Sure?");
         
         if(x == 0){
             String Type = jComboBoxEvent.getSelectedItem().toString();
@@ -458,7 +463,39 @@ public class EventHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        // TODO add your handling code here:
+        
+        String Id = jLabelIdValue.getText();
+        int x = JOptionPane.showConfirmDialog(null, "You are about to Delete Event "+Id+". Are you Sure?");
+        
+        if(x == 0){
+            try {
+                String deleteEvent = "DELETE FROM event where id='"+Id+"'";
+                preparedStatement = con.prepareStatement(deleteEvent);
+                preparedStatement.execute();
+                
+                //refresh table
+                tableloadView();
+                tableloadManage();
+                //set field values null
+                jLabelIdValue.setText("Event ID");
+                jComboBoxEvent.setSelectedIndex(0);
+                jTextAreaAddress.setText(null);
+                jXDatePicker1.setDate(null);
+                //set jspinner1 value to 00:00:00
+                Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner1.setValue(StartTime);
+                //set jspinner2 value to 00:00:00
+                Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner2.setValue(EndTime);
+                jComboBoxOrder.setSelectedIndex(0);
+                //show success message
+                JOptionPane.showMessageDialog(null,"Event "+Id+" Deleted Successfully!");
+            } 
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
