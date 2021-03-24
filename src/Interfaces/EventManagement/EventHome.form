@@ -31,7 +31,7 @@
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="jButtonBack" min="-2" pref="125" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="961" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="1032" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -68,7 +68,10 @@
           <Color blue="0" green="ff" id="yellow" palette="1" red="ff" type="palette"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Perpetua" size="24" style="1"/>
+          <Font name="Perpetua" size="18" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Interfaces/EventManagement/back.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Back"/>
       </Properties>
@@ -100,7 +103,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" pref="937" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="980" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -109,7 +112,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" pref="591" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="594" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -193,36 +196,48 @@
                                   <Component id="jButtonDelete" min="-2" pref="128" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="536" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane4" pref="579" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldSearch" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonSearch" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jScrollPane4" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelId" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="jLabelIdValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelType" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="jComboBoxEvent" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="jButtonSearch" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="jTextFieldSearch" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabelId" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                      <Component id="jLabelIdValue" alignment="3" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabelType" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                      <Component id="jComboBoxEvent" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabelAddress" min="-2" pref="25" max="-2" attributes="0"/>
                                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jXDatePicker1" pref="44" max="32767" attributes="0"/>
-                                      <Component id="jLabelDate" max="32767" attributes="0"/>
+                                      <Component id="jXDatePicker1" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jLabelDate" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -248,8 +263,9 @@
                                       <Component id="jSpinner1" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Component id="jScrollPane4" min="-2" pref="412" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="406" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -403,7 +419,10 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Add Event"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Interfaces/EventManagement/add.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Add "/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddActionPerformed"/>
@@ -444,7 +463,10 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Perpetua" size="18" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Update Event"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Interfaces/EventManagement/update.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Update"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUpdateActionPerformed"/>
@@ -461,7 +483,10 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Delete Event"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Interfaces/EventManagement/remove.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeleteActionPerformed"/>
@@ -474,6 +499,22 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Event ID"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldSearch">
+                </Component>
+                <Component class="javax.swing.JButton" name="jButtonSearch">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Perpetua" size="18" style="1"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Interfaces/EventManagement/search.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Search"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSearchActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
