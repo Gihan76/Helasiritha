@@ -178,14 +178,14 @@
                                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabelIdValue" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSpinner2" min="-2" pref="150" max="-2" attributes="0"/>
                                       <Component id="jComboBoxOrder" min="-2" pref="150" max="-2" attributes="0"/>
                                       <Component id="jScrollPane2" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <Component id="jXDatePicker1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="jComboBoxEvent" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="jSpinner1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jXDatePicker1" alignment="0" pref="150" max="32767" attributes="0"/>
+                                          <Component id="jSpinner2" alignment="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="jComboBoxEvent" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -249,27 +249,25 @@
                                       <Component id="jLabelDate" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabelStartTime" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabelEndTime" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                              <Component id="jSpinner2" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabelOrder" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                              <Component id="jComboBoxOrder" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jButtonAdd" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                              <Component id="jButtonUpdate" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                              <Component id="jButtonDelete" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Component id="jSpinner1" min="-2" pref="44" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jSpinner1" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jLabelStartTime" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jSpinner2" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jLabelEndTime" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jComboBoxOrder" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jLabelOrder" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jButtonAdd" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jButtonUpdate" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jButtonDelete" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jScrollPane4" min="-2" pref="412" max="-2" attributes="0"/>
