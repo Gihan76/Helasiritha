@@ -12,6 +12,7 @@ public class store_home extends javax.swing.JFrame {
      */
     public store_home() {
         initComponents();
+         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
     }
 
     /**

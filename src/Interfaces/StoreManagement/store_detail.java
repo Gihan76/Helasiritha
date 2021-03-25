@@ -26,7 +26,7 @@ public class store_detail extends javax.swing.JInternalFrame {
     
     public store_detail() {
         initComponents();
-        
+//        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
         connection = DBconnect.connect();
        
         tableload();
@@ -182,6 +182,7 @@ public class store_detail extends javax.swing.JInternalFrame {
             }
         });
 
+        insertbtn.setBackground(new java.awt.Color(0, 204, 255));
         insertbtn.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         insertbtn.setText("INSERT");
         insertbtn.addActionListener(new java.awt.event.ActionListener() {
