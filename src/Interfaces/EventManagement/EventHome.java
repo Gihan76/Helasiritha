@@ -14,6 +14,7 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.print.PrinterException;
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.TableCellRenderer;
@@ -54,12 +56,14 @@ public class EventHome extends javax.swing.JFrame {
         initComponents();
         
         //---------set the JFrame to maximize by default on opening-------------
-        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);      
         //-------------------jtable header font size----------------------------
         jTable1.getTableHeader().setFont(new Font("Perpetua", Font.BOLD, 18));
         jTable1.setRowHeight(50);
         jTable2.getTableHeader().setFont(new Font("Perpetua", Font.BOLD, 18));
         jTable2.setRowHeight(30);
+        //-----------------jtable cell editing revoked--------------------------
+        jTable1.setEnabled(false);
         //--------------------------DB connect----------------------------------
         con = DBconnect.connect();
         //---------------------------tabeload-----------------------------------
@@ -142,12 +146,13 @@ public class EventHome extends javax.swing.JFrame {
         jButtonClear = new javax.swing.JButton();
         jButtonPrint = new javax.swing.JButton();
         jButtonPDF = new javax.swing.JButton();
+        jButtonClearSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelWelcome.setFont(new java.awt.Font("Perpetua", 1, 36)); // NOI18N
         jLabelWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelWelcome.setText("Welcome to Event Management ");
+        jLabelWelcome.setText("Welcome to Event Management - Helasiritha (Pvt) Ltd");
 
         jButtonBack.setBackground(java.awt.Color.yellow);
         jButtonBack.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
@@ -177,15 +182,15 @@ public class EventHome extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1087, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
-                .addGap(331, 331, 331))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         jTabbedPane1.addTab("View", jPanel1);
@@ -274,7 +279,6 @@ public class EventHome extends javax.swing.JFrame {
 
         jButtonDelete.setBackground(new java.awt.Color(255, 0, 0));
         jButtonDelete.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
-        jButtonDelete.setForeground(java.awt.Color.white);
         jButtonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/remove.png"))); // NOI18N
         jButtonDelete.setText("Delete");
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -325,6 +329,13 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
+        jButtonClearSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/clear_search.png"))); // NOI18N
+        jButtonClearSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClearSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -343,14 +354,16 @@ public class EventHome extends javax.swing.JFrame {
                             .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelIdValue)
                             .addComponent(jComboBoxOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addComponent(jSpinner2, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabelIdValue))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -366,13 +379,15 @@ public class EventHome extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
+                        .addGap(75, 75, 75)
                         .addComponent(jTextFieldSearch)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonClearSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))))
+                        .addGap(51, 51, 51))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,9 +400,10 @@ public class EventHome extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                    .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonClearSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,14 +429,16 @@ public class EventHome extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                            .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, 0))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4)
+                        .addGap(0, 0, 0))))
         );
 
         jTabbedPane1.addTab("Manage", jPanel2);
@@ -438,7 +456,7 @@ public class EventHome extends javax.swing.JFrame {
                         .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(26, 26, 26)
                         .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -449,7 +467,7 @@ public class EventHome extends javax.swing.JFrame {
                     .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                     .addComponent(jButtonBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(13, 13, 13)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -624,10 +642,10 @@ public class EventHome extends javax.swing.JFrame {
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         
-        String Id = jTextFieldSearch.getText();
+        String searchValue = jTextFieldSearch.getText();
         try {
-            String searchEvent = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event WHERE id LIKE '%"+Id+"%'";
-            preparedStatement = con.prepareStatement(searchEvent);
+            String searchResult = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event WHERE id LIKE '%"+searchValue+"%' OR type LIKE '%"+searchValue+"%' OR address LIKE '%"+searchValue+"%' OR date LIKE '%"+searchValue+"%' OR start_time LIKE '%"+searchValue+"%' OR end_time LIKE '%"+searchValue+"%' OR order_id LIKE '%"+searchValue+"%'";
+            preparedStatement = con.prepareStatement(searchResult);
             rs = preparedStatement.executeQuery();
             
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -747,6 +765,24 @@ public class EventHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonPDFActionPerformed
 
+    private void jButtonClearSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearSearchActionPerformed
+        
+        //clear text on search
+        jTextFieldSearch.setText("");
+        
+        try {
+            String allResult = "SELECT id AS Event_ID,type AS Event_Type,address AS Location,date AS Date,start_time AS Starting_Time,end_time AS Ending_Time,order_id AS Order_Reference FROM event";
+            preparedStatement = con.prepareStatement(allResult);
+            rs = preparedStatement.executeQuery();
+            
+            jTable2.setModel(DbUtils.resultSetToTableModel(rs));
+        } 
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }//GEN-LAST:event_jButtonClearSearchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -786,6 +822,7 @@ public class EventHome extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonClear;
+    private javax.swing.JButton jButtonClearSearch;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonPDF;
     private javax.swing.JButton jButtonPrint;
