@@ -7,14 +7,29 @@
 package Interfaces.EventManagement;
 
 import Connection.DBconnect;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Font;
+import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -124,6 +139,9 @@ public class EventHome extends javax.swing.JFrame {
         jLabelIdValue = new javax.swing.JLabel();
         jTextFieldSearch = new javax.swing.JTextField();
         jButtonSearch = new javax.swing.JButton();
+        jButtonClear = new javax.swing.JButton();
+        jButtonPrint = new javax.swing.JButton();
+        jButtonPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,7 +177,7 @@ public class EventHome extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -277,6 +295,36 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
+        jButtonClear.setBackground(java.awt.Color.cyan);
+        jButtonClear.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
+        jButtonClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/clear.png"))); // NOI18N
+        jButtonClear.setText("Clear");
+        jButtonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClearActionPerformed(evt);
+            }
+        });
+
+        jButtonPrint.setBackground(java.awt.Color.green);
+        jButtonPrint.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
+        jButtonPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/print.png"))); // NOI18N
+        jButtonPrint.setText("Print");
+        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrintActionPerformed(evt);
+            }
+        });
+
+        jButtonPDF.setBackground(java.awt.Color.orange);
+        jButtonPDF.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
+        jButtonPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/pdf.png"))); // NOI18N
+        jButtonPDF.setText("PDF");
+        jButtonPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -304,15 +352,21 @@ public class EventHome extends javax.swing.JFrame {
                                 .addComponent(jXDatePicker1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                             .addComponent(jComboBoxEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(jButtonPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(jTextFieldSearch)
@@ -362,7 +416,12 @@ public class EventHome extends javax.swing.JFrame {
                                     .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Manage", jPanel2);
@@ -380,7 +439,7 @@ public class EventHome extends javax.swing.JFrame {
                         .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(26, 26, 26)
                         .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -441,7 +500,7 @@ public class EventHome extends javax.swing.JFrame {
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         
         String Id = jLabelIdValue.getText();
-        int x = JOptionPane.showConfirmDialog(null,"You are about to Update Event "+Id+". Are you Sure?");
+        int x = JOptionPane.showConfirmDialog(null,"You Are About To Update Event "+Id+". Are You Sure?");
         
         if(x == 0){
             String Type = jComboBoxEvent.getSelectedItem().toString();
@@ -490,7 +549,7 @@ public class EventHome extends javax.swing.JFrame {
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         
         String Id = jLabelIdValue.getText();
-        int x = JOptionPane.showConfirmDialog(null, "You are about to Delete Event "+Id+". Are you Sure?");
+        int x = JOptionPane.showConfirmDialog(null, "You Are About To Delete Event "+Id+". Are You Sure?");
         
         if(x == 0){
             try {
@@ -580,6 +639,115 @@ public class EventHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
+    private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
+        
+        jLabelIdValue.setText("Event ID");
+        jComboBoxEvent.setSelectedIndex(0);
+        jTextAreaAddress.setText(null);
+        jXDatePicker1.setDate(null);
+        try {
+            //set jspinner1 value to 00:00:00
+            Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+            jSpinner1.setValue(StartTime);
+            //set jspinner2 value to 00:00:00
+            Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+            jSpinner2.setValue(EndTime);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        jComboBoxOrder.setSelectedIndex(0);
+        
+    }//GEN-LAST:event_jButtonClearActionPerformed
+
+    private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
+        
+        try {
+            boolean print = jTable2.print();
+            if (!print) {
+                JOptionPane.showMessageDialog(null, "Unable To Print Please Try Again!");
+            }
+        } catch (PrinterException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jButtonPrintActionPerformed
+
+    private void jButtonPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPDFActionPerformed
+        
+        String path = "";
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfc.showSaveDialog(this);
+        if(x == JFileChooser.APPROVE_OPTION){
+            path = jfc.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+        
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path+"EventList.pdf"));
+            doc.open();
+            
+            //get currunt date and time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            
+            //title of the pdf
+            Paragraph para = new Paragraph("Helasiritha Event List - Generated On "+dtf.format(now));
+            para.setAlignment(Element.ALIGN_CENTER);
+            
+            doc.add(para);
+            
+            // add a blank line
+            doc.add( Chunk.NEWLINE );
+            
+            PdfPTable tbl = new PdfPTable(7);
+            //table headers
+            tbl.addCell("Event ID");
+            tbl.addCell("Event Type");
+            tbl.addCell("Address");
+            tbl.addCell("Date");
+            tbl.addCell("Starting Time");
+            tbl.addCell("Ending Time");
+            tbl.addCell("Order ID");
+            
+            for(int i = 0; i < jTable2.getRowCount(); i++){
+                String Id = jTable2.getValueAt(i, 0).toString();
+                String Type = jTable2.getValueAt(i, 1).toString();
+                String Address = jTable2.getValueAt(i, 2).toString();
+                String Date = jTable2.getValueAt(i, 3).toString();
+                String StartTime = jTable2.getValueAt(i, 4).toString();
+                String EndTime = jTable2.getValueAt(i, 5).toString();
+                String OrderId = jTable2.getValueAt(i, 6).toString();
+                
+                tbl.addCell(Id);
+                tbl.addCell(Type);
+                tbl.addCell(Address);
+                tbl.addCell(Date);
+                tbl.addCell(StartTime);
+                tbl.addCell(EndTime);
+                tbl.addCell(OrderId);
+            }
+            doc.add(tbl);
+              
+        } catch (FileNotFoundException | DocumentException ex) {
+            Logger.getLogger(EventHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        doc.close();
+        JOptionPane.showMessageDialog(null,"PDF Generated Successfully!");
+        
+//        Document document = new Document();
+//        try {
+//            PdfWriter.getInstance(document, new FileOutputStream("hello.pdf"));
+//            document.open();
+//            document.add(new Paragraph("it works man thank you!"));
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        document.close();
+        
+    }//GEN-LAST:event_jButtonPDFActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -618,7 +786,10 @@ public class EventHome extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonClear;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonPDF;
+    private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JComboBox jComboBoxEvent;
