@@ -6,9 +6,18 @@
 package Interfaces.StoreManagement;
 
 import Connection.DBconnect;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 /**
@@ -41,6 +50,7 @@ public class StoreHome extends javax.swing.JFrame {
             
           table1.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
+            System.out.println("e");
             
         }
     }
@@ -82,7 +92,7 @@ public class StoreHome extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        pdfbtn = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -210,9 +220,14 @@ public class StoreHome extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_Home_132240.png"))); // NOI18N
         jButton3.setText("HOME");
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_27_Pdf_File_Type_Adobe_logo_logos_4373076.png"))); // NOI18N
-        jButton2.setText("CREATE PDF");
+        pdfbtn.setBackground(new java.awt.Color(204, 204, 204));
+        pdfbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_27_Pdf_File_Type_Adobe_logo_logos_4373076.png"))); // NOI18N
+        pdfbtn.setText("Generate PDF");
+        pdfbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfbtnActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_Print_132184.png"))); // NOI18N
@@ -271,7 +286,7 @@ public class StoreHome extends javax.swing.JFrame {
                                 .addComponent(insertbtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pdfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(updatebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(layout.createSequentialGroup()
@@ -296,7 +311,7 @@ public class StoreHome extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pdfbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,6 +395,7 @@ public class StoreHome extends javax.swing.JFrame {
             tableload();
 
         } catch(Exception e) {
+            System.out.println("e");
         }
     }//GEN-LAST:event_insertbtnActionPerformed
 
@@ -409,6 +425,7 @@ public class StoreHome extends javax.swing.JFrame {
 
                 tableload();
             } catch(Exception e) {
+                System.out.println("e");
             }
         }
     }//GEN-LAST:event_updatebtnActionPerformed
@@ -430,6 +447,7 @@ public class StoreHome extends javax.swing.JFrame {
                 tableload();
 
             } catch(Exception e) {
+                System.out.println("e");
             }
         }
     }//GEN-LAST:event_deletebtnActionPerformed
@@ -448,6 +466,7 @@ public class StoreHome extends javax.swing.JFrame {
             table1.setModel(DbUtils.resultSetToTableModel(rs));
 
         } catch(Exception e) {
+            System.out.println("e");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -477,6 +496,76 @@ public class StoreHome extends javax.swing.JFrame {
 
         table1.setToolTipText(id);
     }//GEN-LAST:event_table1MouseClicked
+
+    private void pdfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfbtnActionPerformed
+        // TODO add your handling code here:
+        String path="";
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfilechooser.showSaveDialog(this);
+        
+        if(x==JFileChooser.APPROVE_OPTION){
+            path=jfilechooser.getSelectedFile().getPath();
+        }
+        
+        Document document = new Document();
+        
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(path+"Store.pdf"));
+                  document.open();
+                  
+                PdfPTable tbl = new PdfPTable(9);
+               
+            //adding headers
+            tbl.addCell("ID");
+            tbl.addCell("Code");
+            tbl.addCell("Name");
+            tbl.addCell("Category");
+            tbl.addCell("Quantity");
+            tbl.addCell("Price");
+            tbl.addCell("Manufactured Date");
+            tbl.addCell("Repair Date");
+            tbl.addCell("Event");
+            
+            for (int i = 0; i < table1.getRowCount(); i++){
+                
+                String id = table1.getValueAt(i, 0).toString();
+                String code = table1.getValueAt(i, 1).toString();
+                String category = table1.getValueAt(i, 2).toString();
+                String name = table1.getValueAt(i, 3).toString();
+                String quatity = table1.getValueAt(i, 4).toString();
+                String price = table1.getValueAt(i, 5).toString();
+                String manufacture = table1.getValueAt(i, 6).toString();
+                String repair = table1.getValueAt(i, 7).toString();
+                String event = table1.getValueAt(i, 8).toString();
+                
+                tbl.addCell(id);
+                tbl.addCell(code);
+                tbl.addCell(category);
+                tbl.addCell(name);
+                tbl.addCell(quatity);
+                tbl.addCell(price);
+                tbl.addCell(manufacture);
+                tbl.addCell(repair);
+                tbl.addCell(event);
+                
+                document.add(tbl);
+                JOptionPane.showMessageDialog(null, "Download PDF");
+            }
+            
+            } catch (DocumentException ex) {
+                Logger.getLogger(StoreHome.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("e");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(StoreHome.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("e");
+        }
+        
+        document.close();
+    }//GEN-LAST:event_pdfbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -521,7 +610,6 @@ public class StoreHome extends javax.swing.JFrame {
     private javax.swing.JLabel idlable;
     private javax.swing.JButton insertbtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -538,6 +626,7 @@ public class StoreHome extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField manufacturedtxt;
     private javax.swing.JTextField nametxt;
+    private javax.swing.JButton pdfbtn;
     private javax.swing.JTextField pricetxt;
     private javax.swing.JTextField quantitytxt;
     private javax.swing.JTextField repairedtxt;
