@@ -7,6 +7,7 @@
 package Interfaces.Main;
 
 import Connection.DBconnect;
+import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EventManagement.EventHome;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
@@ -217,7 +218,9 @@ public class Login extends javax.swing.JFrame {
                     EventHome eh = new EventHome();
                     eh.setVisible(true);
                 } else if(rs.getString("role").equals(deliveryRole)){
-                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                    this.dispose();
+                    DeliveryHome dh = new DeliveryHome();
+                    dh.setVisible(true);
                 }else if(rs.getString("role").equals(employeeRole)){
                     JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                 }else if(rs.getString("role").equals(orderRole)){
