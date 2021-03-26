@@ -31,10 +31,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-import javax.swing.table.TableCellRenderer;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -299,7 +297,7 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
-        jButtonClear.setBackground(java.awt.Color.cyan);
+        jButtonClear.setBackground(java.awt.Color.magenta);
         jButtonClear.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jButtonClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/clear.png"))); // NOI18N
         jButtonClear.setText("Clear");
@@ -319,7 +317,7 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
-        jButtonPDF.setBackground(java.awt.Color.orange);
+        jButtonPDF.setBackground(java.awt.Color.yellow);
         jButtonPDF.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jButtonPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/pdf.png"))); // NOI18N
         jButtonPDF.setText("PDF");
@@ -336,7 +334,7 @@ public class EventHome extends javax.swing.JFrame {
             }
         });
 
-        jButtonPdfForId.setBackground(java.awt.Color.orange);
+        jButtonPdfForId.setBackground(java.awt.Color.yellow);
         jButtonPdfForId.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jButtonPdfForId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/pdf.png"))); // NOI18N
         jButtonPdfForId.setText("Event ID");
@@ -445,9 +443,8 @@ public class EventHome extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonPdfForId, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                                .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButtonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                            .addComponent(jButtonPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -491,10 +488,7 @@ public class EventHome extends javax.swing.JFrame {
         
         String Type = jComboBoxEvent.getSelectedItem().toString();
         String Address = jTextAreaAddress.getText();
-        //--------------------converting date format----------------------------
-        Date Date = jXDatePicker1.getDate();      
-        DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String FormatedDate = DateFormat.format(Date);
+        Date Date = jXDatePicker1.getDate();
         //----------------converting starting time format-----------------------
         SimpleDateFormat TimeFormat = new SimpleDateFormat("HH:mm:ss");
         String STime = TimeFormat.format(jSpinner1.getValue());
@@ -503,28 +497,41 @@ public class EventHome extends javax.swing.JFrame {
         String ETime = TimeFormat1.format(jSpinner2.getValue());
         String Order = jComboBoxOrder.getSelectedItem().toString();
         
-        try {
-            String addEvent = "INSERT INTO event(type,address,date,start_time,end_time,order_id) VALUES('"+Type+"','"+Address+"','"+FormatedDate+"','"+STime+"','"+ETime+"','"+Order+"')";
-            preparedStatement = con.prepareStatement(addEvent);
-            preparedStatement.execute();
-            //refresh table
-            tableloadView();
-            tableloadManage();
-            //set field values null
-            jComboBoxEvent.setSelectedIndex(0);
-            jTextAreaAddress.setText(null);
-            jXDatePicker1.setDate(null);
-            //set jspinner1 value to 00:00:00
-            Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
-            jSpinner1.setValue(StartTime);
-            //set jspinner2 value to 00:00:00
-            Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
-            jSpinner2.setValue(EndTime);
-            jComboBoxOrder.setSelectedIndex(0);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        
+        if (Address.trim().length() == 0 && Date == null) {
+                JOptionPane.showMessageDialog(null,"Please fill all the fields!","Alert",JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                //converting date format
+                DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String FormatedDate = DateFormat.format(Date);
+                
+                //add event query
+                String addEvent = "INSERT INTO event(type,address,date,start_time,end_time,order_id) VALUES('"+Type+"','"+Address+"','"+FormatedDate+"','"+STime+"','"+ETime+"','"+Order+"')";
+                preparedStatement = con.prepareStatement(addEvent);
+                preparedStatement.execute();
+                
+                JOptionPane.showMessageDialog(null,"Event Added Successfully!");
+                
+                //refresh table
+                tableloadView();
+                tableloadManage();
+                
+                //set field values null
+                jComboBoxEvent.setSelectedIndex(0);
+                jTextAreaAddress.setText(null);
+                jXDatePicker1.setDate(null);
+                //set jspinner1 value to 00:00:00
+                Date StartTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner1.setValue(StartTime);
+                //set jspinner2 value to 00:00:00
+                Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
+                jSpinner2.setValue(EndTime);
+                jComboBoxOrder.setSelectedIndex(0);
+                
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } 
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
@@ -566,6 +573,7 @@ public class EventHome extends javax.swing.JFrame {
                 Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
                 jSpinner2.setValue(EndTime);
                 jComboBoxOrder.setSelectedIndex(0);
+                jButtonPdfForId.setText("Event ID");
                 //show success message
                 JOptionPane.showMessageDialog(null,"Event "+Id+" Updated Successfully!");
             } 
@@ -602,6 +610,7 @@ public class EventHome extends javax.swing.JFrame {
                 Date EndTime = new SimpleDateFormat("HH:mm:ss").parse(defaultTime);
                 jSpinner2.setValue(EndTime);
                 jComboBoxOrder.setSelectedIndex(0);
+                jButtonPdfForId.setText("Event ID");
                 //show success message
                 JOptionPane.showMessageDialog(null,"Event "+Id+" Deleted Successfully!");
             } 
@@ -769,16 +778,6 @@ public class EventHome extends javax.swing.JFrame {
         doc.close();
         JOptionPane.showMessageDialog(null,"PDF Generated Successfully!");
         
-//        Document document = new Document();
-//        try {
-//            PdfWriter.getInstance(document, new FileOutputStream("hello.pdf"));
-//            document.open();
-//            document.add(new Paragraph("it works man thank you!"));
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        document.close();
-        
     }//GEN-LAST:event_jButtonPDFActionPerformed
 
     private void jButtonClearSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearSearchActionPerformed
@@ -830,13 +829,29 @@ public class EventHome extends javax.swing.JFrame {
             header.setAlignment(Element.ALIGN_CENTER);
             document.add(header);
             document.add( Chunk.NEWLINE );
-            document.add(new Paragraph("Event ID = "+Id));
-            document.add(new Paragraph("Event Type = "+Type));
-            document.add(new Paragraph("Location = "+Address));
-            document.add(new Paragraph("Date = "+FormatedDate));
-            document.add(new Paragraph("Starting Time = "+STime));
-            document.add(new Paragraph("Ending Time = "+ETime));
-            document.add(new Paragraph("Order ID = "+Order));
+            
+            //assigning column widths of the table
+            float [] pointColumnWidths = {150F, 150F, 150F, 150F, 150F, 150F, 150F};
+            PdfPTable tbl = new PdfPTable(pointColumnWidths);
+            
+            //adding table headers
+            tbl.addCell("Event ID");
+            tbl.addCell("Event Type");
+            tbl.addCell("Location");
+            tbl.addCell("Date");
+            tbl.addCell("Starting Time");
+            tbl.addCell("Ending Time");
+            tbl.addCell("Order ID");
+            
+            tbl.addCell(Id);
+            tbl.addCell(Type);
+            tbl.addCell(Address);
+            tbl.addCell(FormatedDate);
+            tbl.addCell(STime);
+            tbl.addCell(ETime);
+            tbl.addCell(Order);
+            
+            document.add(tbl);
             
             JOptionPane.showMessageDialog(null,"PDF Generated Successfully For Event-"+Id);
             

@@ -281,10 +281,8 @@
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jButtonPdfForId" pref="44" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jButtonClear" pref="44" max="32767" attributes="0"/>
-                                          <Component id="jButtonPrint" max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="jButtonClear" pref="44" max="32767" attributes="0"/>
+                                      <Component id="jButtonPrint" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jButtonPDF" min="-2" pref="44" max="-2" attributes="0"/>
@@ -542,7 +540,7 @@
                 <Component class="javax.swing.JButton" name="jButtonClear">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" id="cyan" palette="1" red="0" type="palette"/>
+                      <Color blue="ff" green="0" id="magenta" palette="1" red="ff" type="palette"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Perpetua" size="18" style="1"/>
@@ -576,7 +574,7 @@
                 <Component class="javax.swing.JButton" name="jButtonPDF">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="c8" id="orange" palette="1" red="ff" type="palette"/>
+                      <Color blue="0" green="ff" id="yellow" palette="1" red="ff" type="palette"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Perpetua" size="18" style="1"/>
@@ -603,7 +601,7 @@
                 <Component class="javax.swing.JButton" name="jButtonPdfForId">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="c8" id="orange" palette="1" red="ff" type="palette"/>
+                      <Color blue="0" green="ff" id="yellow" palette="1" red="ff" type="palette"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Perpetua" size="18" style="1"/>
