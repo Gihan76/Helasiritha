@@ -4,6 +4,7 @@ import Connection.DBconnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -35,7 +36,7 @@ public class DeliveryHome extends javax.swing.JFrame {
         
         try{
             
-            String sql = "SELECT id,c_name,d_address,d_date,d_fee,order FROM delivery ";
+            String sql = "SELECT id,c_name,d_address,d_date,d_fee,order_id FROM delivery ";
             pst =con.prepareStatement(sql);
             rs = pst.executeQuery();
             
@@ -297,13 +298,17 @@ public class DeliveryHome extends javax.swing.JFrame {
        
         String name = jTextField2.getText();
         String address = jTextArea1.getText();
+        
         Date date = jXDatePicker1.getDate();
+        DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String FormatedDate = DateFormat.format(date);
+        
         String fee = jTextField1.getText();
         String order = jComboBox1.getSelectedItem().toString();
         
         try{
            
-            String add_sql =" INSERT INTO delivery (c_name,d_address,d_date,d_fee,order) values ('"+ name +"','"+ address +"','"+ date +"','"+ fee +"','"+ order +"') ";
+            String add_sql =" INSERT INTO delivery (c_name,d_address,d_date,d_fee,order_id) values ('"+ name +"','"+ address +"','"+ FormatedDate +"','"+ fee +"','"+ order +"') ";
             
             pst = con.prepareStatement(add_sql);
            
@@ -362,11 +367,15 @@ public class DeliveryHome extends javax.swing.JFrame {
         String id = jLabel4.getText();
         String name = jTextField2.getText();
         String address = jTextArea1.getText();
+        
         Date date = jXDatePicker1.getDate();
+        DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String FormatedDate = DateFormat.format(date);
+        
         String fee = jTextField1.getText();
         String order = jComboBox1.getSelectedItem().toString();
         
-        String update_sql = " UPDATE delivery set c_name ='"+ name +"',d_address ='"+ address +"' ,d_data ='"+ date +"' ,d_fee ='"+ fee +"' ,order ='"+ order +"' where id ='"+ id +"' ";
+        String update_sql = " UPDATE delivery set c_name ='"+ name +"',d_address ='"+ address +"' ,d_date ='"+ FormatedDate +"' ,d_fee ='"+ fee +"' ,order_id ='"+ order +"' where id ='"+ id +"' ";
            
         try{
             
