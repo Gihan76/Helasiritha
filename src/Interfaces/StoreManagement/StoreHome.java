@@ -550,10 +550,11 @@ public class StoreHome extends javax.swing.JFrame {
                 tbl.addCell(repair);
                 tbl.addCell(event);
                 
-                document.add(tbl);
-                JOptionPane.showMessageDialog(null, "Download PDF");
+                
+                
             }
-            
+            document.add(tbl);
+            JOptionPane.showMessageDialog(null, "Download PDF");
             } catch (DocumentException ex) {
                 Logger.getLogger(StoreHome.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("e");
