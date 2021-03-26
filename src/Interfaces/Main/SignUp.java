@@ -112,7 +112,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(jLabelWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(230, 230, 230)
                 .addComponent(jButton1)
-                .addGap(26, 26, 26))
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
