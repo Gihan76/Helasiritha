@@ -6,11 +6,24 @@
 
 package Interfaces.Main;
 
+import Connection.DBconnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gihan
  */
 public class SignUp extends javax.swing.JFrame {
+    
+    Connection con = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form SignUp
@@ -18,8 +31,29 @@ public class SignUp extends javax.swing.JFrame {
     public SignUp() {
         initComponents();
         
+        con = DBconnect.connect();
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+    
+    // function to check if the username already exist in database table
+    public boolean checkUsername(String username)
+    {
+        boolean checkUser = false;
+        String query = "SELECT * FROM user WHERE `username` =?";
+        
+        try {
+            preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            rs = preparedStatement.executeQuery();
+            
+            if(rs.next()){
+                checkUser = true;
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return checkUser;
     }
 
     /**
@@ -238,7 +272,40 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        // TODO add your handling code here:
+        
+        String fname = jTextFieldFirstName.getText();
+        String lname = jTextFieldLastName.getText();
+        String uname = jTextFieldUserName.getText();
+        String pass = String.valueOf(jPasswordFieldPassword.getPassword());
+        String re_pass = String.valueOf(jPasswordFieldRetypePassword.getPassword());
+        String role = jComboBoxRole.getSelectedItem().toString();
+        
+        if(uname.equals("")){
+            JOptionPane.showMessageDialog(null, "Username Is Empty!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(pass.equals("")){
+            JOptionPane.showMessageDialog(null, "Password Is Empty!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(!pass.equals(re_pass)){
+            JOptionPane.showMessageDialog(null, "Passwords Does Not Match! Retype The Password Again","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(checkUsername(uname)){
+            JOptionPane.showMessageDialog(null, "This Username Already Exist","Alert",JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+                String newUser = "INSERT INTO user(first_name,last_name,username,password,role) VALUES('"+fname+"','"+lname+"','"+uname+"','"+pass+"','"+role+"')";
+                preparedStatement = con.prepareStatement(newUser);
+                preparedStatement.execute();
+                JOptionPane.showMessageDialog(null, "New User Added Successfully! Please Login Through The Login Page!");
+                
+                jTextFieldFirstName.setText("");
+                jTextFieldLastName.setText("");
+                jTextFieldUserName.setText("");
+                jPasswordFieldPassword.setText("");
+                jPasswordFieldRetypePassword.setText("");
+                jComboBoxRole.setSelectedIndex(0);
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
     /**

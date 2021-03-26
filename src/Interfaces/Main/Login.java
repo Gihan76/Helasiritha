@@ -6,11 +6,26 @@
 
 package Interfaces.Main;
 
+import Connection.DBconnect;
+import Interfaces.EventManagement.EventHome;
+import Interfaces.StoreManagement.StoreHome;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gihan
  */
 public class Login extends javax.swing.JFrame {
+    
+    Connection con = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form Login
@@ -18,6 +33,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         
+        con = DBconnect.connect();
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
@@ -37,8 +53,8 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabelUserName = new javax.swing.JLabel();
         jLabelPassword = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jTextFieldUserNameLogin = new javax.swing.JTextField();
+        jPasswordFieldPasswordLogin = new javax.swing.JPasswordField();
         jButtonRegister = new javax.swing.JButton();
         jButtonLogin = new javax.swing.JButton();
 
@@ -81,9 +97,9 @@ public class Login extends javax.swing.JFrame {
         jLabelPassword.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jLabelPassword.setText("Password");
 
-        jTextField1.setFont(new java.awt.Font("Perpetua", 0, 18)); // NOI18N
+        jTextFieldUserNameLogin.setFont(new java.awt.Font("Perpetua", 0, 18)); // NOI18N
 
-        jPasswordField1.setFont(new java.awt.Font("Perpetua", 0, 18)); // NOI18N
+        jPasswordFieldPasswordLogin.setFont(new java.awt.Font("Perpetua", 0, 18)); // NOI18N
 
         jButtonRegister.setBackground(java.awt.Color.orange);
         jButtonRegister.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
@@ -99,6 +115,11 @@ public class Login extends javax.swing.JFrame {
         jButtonLogin.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jButtonLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/Main/log-in.png"))); // NOI18N
         jButtonLogin.setText("Login");
+        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -116,8 +137,8 @@ public class Login extends javax.swing.JFrame {
                         .addGap(492, 492, 492))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1))
+                            .addComponent(jTextFieldUserNameLogin)
+                            .addComponent(jPasswordFieldPasswordLogin))
                         .addGap(378, 378, 378))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(422, 422, 422)
@@ -133,11 +154,11 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(300, 300, 300)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldUserNameLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelUserName))
                 .addGap(64, 64, 64)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordFieldPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPassword))
                 .addGap(300, 300, 300)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -170,6 +191,54 @@ public class Login extends javax.swing.JFrame {
         SignUp sign = new SignUp();
         sign.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterActionPerformed
+
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        
+        String uname = jTextFieldUserNameLogin.getText();
+        String pass = String.valueOf(jPasswordFieldPasswordLogin.getPassword());
+        
+        String adminRole = "Admin";
+        String eventRole = "Event Manager"; 
+        String storeRole = "Store Manager";
+        String employeeRole = "Employee Manager";
+        String orderRole = "Order Manager";
+        String deliveryRole = "Delivery Manager";
+        String customerRole = "Customer Manager";
+        String financialRole = "Financial Manager";
+        
+        try {
+            String searchUser = "SELECT role FROM user WHERE username = '"+uname+"' AND password = '"+pass+"'";
+            preparedStatement = con.prepareStatement(searchUser);
+            rs = preparedStatement.executeQuery();   
+            
+            if(rs.next()){
+                if (rs.getString("role").equals(eventRole)) {
+                    this.dispose();
+                    EventHome eh = new EventHome();
+                    eh.setVisible(true);
+                } else if(rs.getString("role").equals(deliveryRole)){
+                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                }else if(rs.getString("role").equals(employeeRole)){
+                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                }else if(rs.getString("role").equals(orderRole)){
+                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                }else if(rs.getString("role").equals(customerRole)){
+                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                }else if(rs.getString("role").equals(financialRole)){
+                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                }else if(rs.getString("role").equals(storeRole)){
+                    this.dispose();
+                    StoreHome sh = new StoreHome();
+                    sh.setVisible(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Incorrect Username Or Password!","Alert",JOptionPane.WARNING_MESSAGE);
+            }    
+        } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,7 +284,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelWelcome;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jPasswordFieldPasswordLogin;
+    private javax.swing.JTextField jTextFieldUserNameLogin;
     // End of variables declaration//GEN-END:variables
 }
