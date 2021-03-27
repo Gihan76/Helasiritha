@@ -213,11 +213,20 @@ public class Login extends javax.swing.JFrame {
             rs = preparedStatement.executeQuery();   
             
             if(rs.next()){
-                if (rs.getString("role").equals(eventRole)) {
+                if(rs.getString("role").equals(adminRole)) {
+                    this.dispose();
+                    Home h = new Home();
+                    h.setVisible(true);
+                    h.jLabelUserNameHome.setText(uname);
+                }else if(rs.getString("role").equals(storeRole)){
+                    this.dispose();
+                    StoreHome sh = new StoreHome();
+                    sh.setVisible(true);
+                }else if(rs.getString("role").equals(eventRole)){
                     this.dispose();
                     EventHome eh = new EventHome();
                     eh.setVisible(true);
-                } else if(rs.getString("role").equals(deliveryRole)){
+                }else if(rs.getString("role").equals(deliveryRole)){
                     this.dispose();
                     DeliveryHome dh = new DeliveryHome();
                     dh.setVisible(true);
@@ -229,10 +238,6 @@ public class Login extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                 }else if(rs.getString("role").equals(financialRole)){
                     JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
-                }else if(rs.getString("role").equals(storeRole)){
-                    this.dispose();
-                    StoreHome sh = new StoreHome();
-                    sh.setVisible(true);
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"Incorrect Username Or Password!","Alert",JOptionPane.WARNING_MESSAGE);
