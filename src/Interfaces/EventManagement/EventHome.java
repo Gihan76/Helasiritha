@@ -7,6 +7,8 @@
 package Interfaces.EventManagement;
 
 import Connection.DBconnect;
+import Interfaces.Main.Home;
+import Interfaces.Main.Login;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -155,7 +157,12 @@ public class EventHome extends javax.swing.JFrame {
         jButtonBack.setBackground(java.awt.Color.yellow);
         jButtonBack.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/back.png"))); // NOI18N
-        jButtonBack.setText("Back");
+        jButtonBack.setText("Home");
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
@@ -862,6 +869,21 @@ public class EventHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonPdfForIdActionPerformed
 
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+        Home h = new Home();
+        Login l = new Login();
+        String home = "Home";
+        String logout = "Logout";
+        
+        if (jButtonBack.getText().equals(logout)) {
+            this.dispose();
+            l.setVisible(true);
+        } else if(jButtonBack.getText().equals(home)){
+            this.dispose();
+            h.setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -899,7 +921,7 @@ public class EventHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonBack;
+    public javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonClear;
     private javax.swing.JButton jButtonClearSearch;
     private javax.swing.JButton jButtonDelete;

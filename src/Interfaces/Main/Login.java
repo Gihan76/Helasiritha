@@ -226,6 +226,7 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                     EventHome eh = new EventHome();
                     eh.setVisible(true);
+                    eh.jButtonBack.setText("Logout");
                 }else if(rs.getString("role").equals(deliveryRole)){
                     this.dispose();
                     DeliveryHome dh = new DeliveryHome();
