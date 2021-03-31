@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 import net.proteanit.sql.DbUtils;
 
@@ -144,7 +145,7 @@ public class CustomerHome extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel7.setText("E-mail");
 
-        cid.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        cid.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 14)); // NOI18N
 
         c_nic.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         c_nic.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +300,11 @@ public class CustomerHome extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        c_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                c_tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(c_table);
 
         jButton4.setBackground(new java.awt.Color(0, 153, 51));
@@ -427,7 +433,88 @@ public class CustomerHome extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        
+        //show a dialog box when user clicks the update button and get the answer
+        int x = JOptionPane.showConfirmDialog(null, "Do you really want to update?");
+        
+        if(x==0){
+            
+            
+            //get the values from fields
+            String id = cid.getText();
+            String name = c_name.getText();
+            String nic = c_nic.getText();
+            String address = c_address.getText();
+            String mobile = c_mobile.getText();
+            String email = c_email.getText();
+            
+            //check the get values
+            System.out.println(id + name + nic +address + mobile+ email);
+            
+            try {
+                
+                
+                //update query for customer details
+                String update = "UPDATE customer SET name = '"+ name +"' , nic = '"+ nic +"' , address = '"+ address +"' , mobile_number = '"+ mobile +"' , email = '"+ email +"' ";
+            
+                pst = con.prepareStatement(update);
+                //execute update statment
+                pst.execute();
+                //table load
+                tableload();
+                
+            } catch (Exception e) {
+                
+                //check for errors
+                System.err.println(e);
+            }
+            
+        }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void c_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_c_tableMouseClicked
+        // TODO add your handling code here:
+        
+        
+        // get the selected row
+        int row = c_table.getSelectedRow();
+        
+        //get the id of selected row
+        String id = c_table.getValueAt(row, 0).toString();
+        //check whether it gets the id
+        System.err.println(id);
+        //get the customer name of the selected row
+        String name = c_table.getValueAt(row, 1).toString();
+         //check whether it gets the name
+        System.err.println(name);
+        //get the customer NIC of the selected row
+        String nic = c_table.getValueAt(row, 2).toString();
+        //get the customer address of the selected row
+        String address = c_table.getValueAt(row, 3).toString();
+        //get the customer address of the selected row
+        String mobile = c_table.getValueAt(row, 4).toString();
+        //get the customer email of the selected row
+        String email = c_table.getValueAt(row, 5).toString();
+        
+        
+        
+        //srt the cudtomer id of the selected row
+        cid.setText(id);
+        //set the customer name of the selected row
+        c_name.setText(name);
+        //set the customer NIC of the selected row
+        c_nic.setText(nic);
+        //set the customer address of the selected row
+        c_address.setText(address);
+        //set the customer mobile number of the selected row
+        c_mobile.setText(mobile);
+        //set the customer email of the selected row
+        c_email.setText(email);
+        
+        
+    }//GEN-LAST:event_c_tableMouseClicked
 
     /**
      * @param args the command line arguments

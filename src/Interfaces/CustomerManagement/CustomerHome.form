@@ -265,7 +265,7 @@
         <Component class="javax.swing.JLabel" name="cid">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Yu Gothic UI Semilight" size="14" style="0"/>
+              <Font name="Yu Gothic UI Semilight" size="14" style="1"/>
             </Property>
           </Properties>
         </Component>
@@ -396,6 +396,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="c_tableMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
