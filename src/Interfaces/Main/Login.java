@@ -240,6 +240,7 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                     CustomerHome cst = new CustomerHome();
                     cst.setVisible(true);
+                    cst.back.setText("logout");
                 }else if(rs.getString("role").equals(financialRole)){
                     JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                 }
