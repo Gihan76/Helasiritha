@@ -197,6 +197,11 @@ public class CustomerHome extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/DeliveryManagement/remove.png"))); // NOI18N
         jButton2.setText("DELETE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 0, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -436,7 +441,7 @@ public class CustomerHome extends javax.swing.JFrame {
         
         
         //show a dialog box when user clicks the update button and get the answer
-        int x = JOptionPane.showConfirmDialog(null, "Do you really want to update?");
+        int x = JOptionPane.showConfirmDialog(null, "Do You Really Want To Update This Record?");
         
         if(x==0){
             
@@ -456,7 +461,7 @@ public class CustomerHome extends javax.swing.JFrame {
                 
                 
                 //update query for customer details
-                String update = "UPDATE customer SET name = '"+ name +"' , nic = '"+ nic +"' , address = '"+ address +"' , mobile_number = '"+ mobile +"' , email = '"+ email +"' ";
+                String update = "UPDATE customer SET name = '"+ name +"' , nic = '"+ nic +"' , address = '"+ address +"' , mobile_number = '"+ mobile +"' , email = '"+ email +"'  where customer_id = '"+ id +"' ";
             
                 pst = con.prepareStatement(update);
                 //execute update statment
@@ -515,6 +520,45 @@ public class CustomerHome extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_c_tableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        //show a dialog box when user clicks the delete button and get the answer
+        int x = JOptionPane.showConfirmDialog(null, "Do You Really Want To Delete This Record?");
+        
+        
+        if(x==0){
+            
+            //get the id from fields
+            String id = cid.getText();
+            
+            try {
+                
+                //delete query
+                String delete = "DELETE from customer where customer_id='"+ id +"'";
+                pst = con.prepareStatement(delete);
+                //execute query
+                pst.execute();
+                
+                //check tne current status
+                System.out.println("deleted");
+                
+                //load the table
+                tableload();
+                
+            } catch (Exception e) {
+                
+                //check for errors
+                System.out.println(e);
+            }
+ 
+           
+            
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
