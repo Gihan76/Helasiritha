@@ -6,9 +6,13 @@
 package Interfaces.CustomerManagement;
 
 import Connection.DBconnect;
+import com.lowagie.text.Font;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.table.JTableHeader;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -19,7 +23,7 @@ public class CustomerHome extends javax.swing.JFrame {
     
     Connection con = null; 
     PreparedStatement pst = null;
-    //to assign and save the values which are came from db
+    //   assign and save the values which are came from db
     ResultSet rs = null; 
 
     /**
@@ -32,11 +36,54 @@ public class CustomerHome extends javax.swing.JFrame {
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);   
         
-         //connect to db
-          con = DBconnect.connect();
+        //connect to db
+        con = DBconnect.connect();
+        
+        
+        //load the table
+        tableload();
+        
+        //table settings
+        c_table.setRowHeight(40);
+        c_table.getTableHeader().setFont(new java.awt.Font("Perpetua", java.awt.Font.BOLD, 18));
+       
+        
         
     }
 
+    
+    // load the customer details table
+    public void tableload(){
+        
+        try {
+             
+             // sql query for retrieving data from the db
+             String read = "SELECT customer_id as 'Customer ID',name as 'Name',nic as 'NIC',address as 'Address',mobile_number as 'Mobile Number',email as 'E-mail' FROM customer";
+             pst = con.prepareStatement(read);
+             rs = pst.executeQuery();
+             
+             
+             c_table.setModel(DbUtils.resultSetToTableModel(rs));
+             
+             theader();
+             
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
+       
+         }
+    
+    
+    //Table settings
+    private void theader(){
+        JTableHeader thead = c_table.getTableHeader();
+        thead.setForeground(Color.BLUE);
+        
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +111,7 @@ public class CustomerHome extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        c_table = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
@@ -240,8 +287,8 @@ public class CustomerHome extends javax.swing.JFrame {
                 .addGap(105, 105, 105))
         );
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        c_table.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        c_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -252,7 +299,7 @@ public class CustomerHome extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(c_table);
 
         jButton4.setBackground(new java.awt.Color(0, 153, 51));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -282,23 +329,23 @@ public class CustomerHome extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(127, 127, 127))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton6)
+                                .addGap(37, 37, 37)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(167, 167, 167))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +363,7 @@ public class CustomerHome extends javax.swing.JFrame {
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(77, 77, 77)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -365,9 +412,11 @@ public class CustomerHome extends javax.swing.JFrame {
               //  set the query as a statement
               pst = con.prepareStatement(instq);
               
-             
               //execute query
               pst.execute();
+              
+              //load the table
+               tableload();
              
         } catch (Exception e) {
             
@@ -421,6 +470,7 @@ public class CustomerHome extends javax.swing.JFrame {
     private javax.swing.JTextField c_mobile;
     private javax.swing.JTextField c_name;
     private javax.swing.JTextField c_nic;
+    private javax.swing.JTable c_table;
     private javax.swing.JLabel cid;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -437,7 +487,6 @@ public class CustomerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
