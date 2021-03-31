@@ -115,7 +115,7 @@ public class CustomerHome extends javax.swing.JFrame {
         c_table = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        c_search = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -321,8 +321,13 @@ public class CustomerHome extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_Search_132289.png"))); // NOI18N
         jButton5.setText("SEARCH");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        c_search.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/EventManagement/pdf.png"))); // NOI18N
@@ -342,7 +347,7 @@ public class CustomerHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(65, 65, 65)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(c_search, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -368,7 +373,7 @@ public class CustomerHome extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(c_search, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -560,6 +565,32 @@ public class CustomerHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        //get the searching word
+        String word = c_search.getText();
+        
+        try {
+            
+            //search query
+             String search = "select customer_id, name, nic, address, mobile_number , email from customer where nic LIKE '%"+ word +"%'";
+             pst = con.prepareStatement(search);
+             //execute query
+             rs = pst.executeQuery();
+             //add search details to the table
+             c_table.setModel(DbUtils.resultSetToTableModel(rs));
+             
+             
+        } catch (Exception e) {
+            
+            //cheack foe errors
+            System.err.println(e);
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -601,6 +632,7 @@ public class CustomerHome extends javax.swing.JFrame {
     private javax.swing.JTextField c_mobile;
     private javax.swing.JTextField c_name;
     private javax.swing.JTextField c_nic;
+    private javax.swing.JTextField c_search;
     private javax.swing.JTable c_table;
     private javax.swing.JLabel cid;
     private javax.swing.JButton jButton1;
@@ -618,6 +650,5 @@ public class CustomerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
