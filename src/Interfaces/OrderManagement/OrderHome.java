@@ -324,6 +324,8 @@ public class OrderHome extends javax.swing.JFrame {
         pst = con.prepareStatement(q);
         pst.execute();
         
+        ordertableLoad();
+        
         }catch(Exception e){
                 
                 }
