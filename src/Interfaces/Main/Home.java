@@ -10,6 +10,7 @@ import Connection.DBconnect;
 import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EventManagement.EventHome;
+import Interfaces.FinancialManagement.MainUI;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -258,7 +259,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCustomerActionPerformed
 
     private void jButtonFinancialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinancialActionPerformed
-        JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+        //JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+        MainUI ui = new MainUI();
+        ui.setVisible(true);
     }//GEN-LAST:event_jButtonFinancialActionPerformed
 
     /**
