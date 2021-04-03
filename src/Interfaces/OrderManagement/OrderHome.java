@@ -8,6 +8,9 @@ package Interfaces.OrderManagement;
 import Connection.DBconnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -17,7 +20,9 @@ public class OrderHome extends javax.swing.JFrame {
     
     Connection con = null;
     PreparedStatement pst = null;
+    ResultSet rs = null;
 
+    
     /**
      * Creates new form OrderHome
      */
@@ -26,6 +31,25 @@ public class OrderHome extends javax.swing.JFrame {
         
         // connect to DB
         con = DBconnect.connect();
+        
+        ordertableLoad();
+    }
+    
+    public void ordertableLoad(){
+        
+         try{
+        
+        String sql = "SELECT o_customer_name,o_customer_nic,order_type,order_price,o_receive_date,o_complete_date FROM order_management";
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        
+        Ordertable.setModel(DbUtils.resultSetToTableModel(rs));
+        
+        }catch(Exception e){
+                System.out.println("e");
+        }
+        
+        
     }
 
     /**
@@ -52,7 +76,7 @@ public class OrderHome extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Ordertable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         customerName = new javax.swing.JTextField();
@@ -118,7 +142,7 @@ public class OrderHome extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/OrderManagement/D.png"))); // NOI18N
         jButton5.setText("DELETE");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Ordertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -131,7 +155,7 @@ public class OrderHome extends javax.swing.JFrame {
                 "Order ID", "Customer Name", "NIC", "Order Type", "Order Price", "Receive Date", "Complete date"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Ordertable);
 
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,6 +367,7 @@ public class OrderHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Ordertable;
     private javax.swing.JTextField completeDate;
     private javax.swing.JTextField customerNIC;
     private javax.swing.JTextField customerName;
@@ -361,10 +386,11 @@ public class OrderHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField orderPrice;
     private javax.swing.JComboBox<String> orderType;
     private javax.swing.JTextField receiveDate;
     // End of variables declaration//GEN-END:variables
+
+
 }
