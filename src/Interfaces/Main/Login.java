@@ -10,6 +10,7 @@ import Connection.DBconnect;
 import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EventManagement.EventHome;
+import Interfaces.FinancialManagement.MainUI;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -242,7 +243,9 @@ public class Login extends javax.swing.JFrame {
                     cst.setVisible(true);
                     cst.back.setText("logout");
                 }else if(rs.getString("role").equals(financialRole)){
-                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                    this.dispose();
+                    MainUI ui = new MainUI();
+                    ui.setVisible(true);
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"Incorrect Username Or Password!","Alert",JOptionPane.WARNING_MESSAGE);
