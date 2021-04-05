@@ -9,6 +9,7 @@ import Connection.DBconnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
 
@@ -24,12 +25,12 @@ public class Employee_home extends javax.swing.JFrame {
      * Creates new form Employee_home
      */
     
-        Connection connection = null;
+    Connection connection = null;
     PreparedStatement pat = null;
     ResultSet rs = null;
     
     public Employee_home() {
-         initComponents();
+        initComponents();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
         
         connection = DBconnect.connect();
@@ -82,6 +83,7 @@ public class Employee_home extends javax.swing.JFrame {
         Table1 = new javax.swing.JTable();
         bbb = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        eid = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,6 +102,11 @@ public class Employee_home extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jButton2.setText("Update Employee Details");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jButton3.setText("Delete Employee Details");
@@ -159,10 +166,21 @@ public class Employee_home extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        Table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Table1MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(Table1);
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel7.setText("Employee Management System");
+
+        eid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eidActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,26 +205,28 @@ public class Employee_home extends javax.swing.JFrame {
                                 .addComponent(jButton3)
                                 .addGap(76, 76, 76))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(90, 90, 90)
-                                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel2))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(contact_no, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(41, 41, 41)
-                                                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(eid, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addGap(90, 90, 90)
+                                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel6)
+                                                .addComponent(jLabel2))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(contact_no, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(41, 41, 41)
+                                                    .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, Short.MAX_VALUE))))))
                                 .addGap(44, 44, 44)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -231,7 +251,9 @@ public class Employee_home extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(71, 71, 71)
+                .addGap(31, 31, 31)
+                .addComponent(eid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -289,9 +311,65 @@ public class Employee_home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int x = JOptionPane.showConfirmDialog(null, "Are you sure you want update this details");
+
+        if(x == 0)
+        {
+            String id = eid.getText();
+        String Name = name.getText();
+        String Address = address.getText();
+        String Contact_no = contact_no.getText();
+        String NIC = nic.getText();
+        String Birthday = bbb.getText();
+       // String Birthday = b_date.getToolTipText();
+        String Salary = sal.getText();
+
+            String sql = "UPDATE employee SET eName = '"+ Name +"', eAddress = '"+ Address +"', Contact_no = '"+ Contact_no +"', NIC = '"+ NIC +"', Birthday = '"+ Birthday +"', Salary = '"+ Salary +"' WHERE id = '"+ id +"'";
+
+            try{
+                pat = connection.prepareStatement(sql);
+                pat.execute();
+
+                //load table
+
+                loadTB();
+            } catch(Exception e) {
+                System.out.println("e");
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void eidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eidActionPerformed
+
+    private void Table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table1MouseClicked
+        
+        int r = Table1.getSelectedRow();
+        
+                String id = Table1.getValueAt(r, 0).toString();
+        String Name = Table1.getValueAt(r, 1).toString();
+        String Address = Table1.getValueAt(r, 2).toString();
+        String Contact_no = Table1.getValueAt(r, 3).toString();
+        String NIC = Table1.getValueAt(r, 4).toString();
+        String Birthday = Table1.getValueAt(r, 5).toString();
+        String Salary = Table1.getValueAt(r, 6).toString();
+        
+        name.setText(Name);
+        address.setText(Address);
+        contact_no.setText(Contact_no);
+        nic.setText(NIC);
+        bbb.setText(Birthday);
+        sal.setText(Salary);
+        eid.setText(id);
+        
+        
+        Table1.setToolTipText(id);
+       
+    }//GEN-LAST:event_Table1MouseClicked
+
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -329,6 +407,7 @@ public class Employee_home extends javax.swing.JFrame {
     private javax.swing.JTextField address;
     private javax.swing.JTextField bbb;
     private javax.swing.JTextField contact_no;
+    private javax.swing.JTextField eid;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
