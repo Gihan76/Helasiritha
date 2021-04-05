@@ -85,6 +85,8 @@ public class Employee_home extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         eid = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        search = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -191,6 +193,13 @@ public class Employee_home extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setText("ID");
 
+        jButton1.setText("Search Employee");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -237,25 +246,25 @@ public class Employee_home extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5))
                                 .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nic, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                    .addComponent(bbb))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nic, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                        .addComponent(bbb))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jButton5)
-                                        .addGap(311, 311, 311))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(372, 372, 372)
-                                        .addComponent(jButton2)
-                                        .addGap(33, 33, 33)))
+                                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton5)
+                                .addGap(74, 74, 74)
+                                .addComponent(jButton2)
+                                .addGap(61, 61, 61)
                                 .addComponent(jButton3)
-                                .addGap(149, 149, 149))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addGap(76, 76, 76))))
+                                .addGap(78, 78, 78))))
+                    .addComponent(jScrollPane3))
+                .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,7 +302,11 @@ public class Employee_home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(62, 62, 62)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -414,6 +427,24 @@ public class Employee_home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Search Employee
+        
+                String id = search.getText();
+
+        String M = "SELECT id,eName,eAddress,Contact_no,NIC,Birthday,Salary FROM employee WHERE id LIKE '%"+ id +"%'";
+
+        try{
+            pat = connection.prepareStatement(M);
+            rs = pat.executeQuery();
+
+            Table1.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch(Exception e) {
+            System.out.println("e");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -453,6 +484,7 @@ public class Employee_home extends javax.swing.JFrame {
     private javax.swing.JTextField bbb;
     private javax.swing.JTextField contact_no;
     private javax.swing.JTextField eid;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -471,5 +503,6 @@ public class Employee_home extends javax.swing.JFrame {
     private javax.swing.JTextField name;
     private javax.swing.JTextField nic;
     private javax.swing.JTextField sal;
+    private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
 }
