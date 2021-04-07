@@ -8,7 +8,9 @@ package Interfaces.FinancialManagement;
 import Connection.DBconnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -18,6 +20,7 @@ public class FinanceUI extends javax.swing.JFrame {
 
     Connection conn = null;
     PreparedStatement pst = null;
+    ResultSet rs = null;
     /**
      * Creates new form FinanceUI
      */
@@ -26,8 +29,21 @@ public class FinanceUI extends javax.swing.JFrame {
         //Connect to DB
         conn = DBconnect.connect();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //View Table
+        viewTable();
     }
 
+    public void viewTable(){
+        try{
+        String sql = "SELECT name,date,price,type,method,status FROM finance";
+        pst = conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        
+        jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        }catch(Exception e){
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,15 +101,16 @@ public class FinanceUI extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 255, 153));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("                                     Financial Managment System - Helasiritha (Pvt) Ltd.");
+        jLabel1.setText("Financial Managment System - Helasiritha (Pvt) Ltd.");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(186, 186, 186))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,15 +333,15 @@ public class FinanceUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,11 +355,10 @@ public class FinanceUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jButton2))
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(68, 68, 68))
@@ -396,6 +412,9 @@ public class FinanceUI extends javax.swing.JFrame {
         String addFinance = "INSERT INTO finance(name,date,price,type,method,status)VALUES('"+name+"','"+date+"','"+price+"','"+type+"','"+method+"','"+status+"')";
         pst = conn.prepareStatement(addFinance);
         pst.execute();
+        
+        //View Table
+        viewTable();
         
         JOptionPane.showMessageDialog(null,"Financial Business Added Successfully!");
         }catch(Exception e){
