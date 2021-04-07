@@ -79,7 +79,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="465" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="381" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
@@ -370,7 +370,7 @@
                       <Color blue="ff" green="cc" red="99" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/finance/interfaces/iconfinder_Create_132255.png"/>
+                      <Image iconType="3" name="/Interfaces/FinancialManagement/iconfinder_Create_132255.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Insert"/>
                   </Properties>
@@ -384,7 +384,7 @@
                       <Color blue="ff" green="cc" red="99" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/finance/interfaces/iconfinder_Refresh_132187.png"/>
+                      <Image iconType="3" name="/Interfaces/FinancialManagement/iconfinder_Refresh_132187.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Update"/>
                   </Properties>
@@ -395,7 +395,7 @@
                       <Color blue="ff" green="cc" red="99" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/finance/interfaces/iconfinder_Delete_132192.png"/>
+                      <Image iconType="3" name="/Interfaces/FinancialManagement/iconfinder_Delete_132192.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
@@ -465,7 +465,7 @@
               <Color blue="ff" green="cc" red="99" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/finance/interfaces/iconfinder_Search_132289.png"/>
+              <Image iconType="3" name="/Interfaces/FinancialManagement/iconfinder_Search_132289.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Search"/>
           </Properties>
@@ -476,7 +476,7 @@
               <Color blue="ff" green="cc" red="99" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/finance/interfaces/iconfinder_Print_132184.png"/>
+              <Image iconType="3" name="/Interfaces/FinancialManagement/iconfinder_Print_132184.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Print"/>
           </Properties>
@@ -487,7 +487,7 @@
               <Color blue="ff" green="cc" red="99" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/finance/interfaces/pdf.png"/>
+              <Image iconType="3" name="/Interfaces/FinancialManagement/pdf.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="PDF"/>
           </Properties>

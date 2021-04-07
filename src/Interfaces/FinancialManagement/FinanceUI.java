@@ -159,7 +159,7 @@ public class FinanceUI extends javax.swing.JFrame {
         });
 
         jButton4.setBackground(new java.awt.Color(153, 204, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/iconfinder_Create_132255.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Create_132255.png"))); // NOI18N
         jButton4.setText("Insert");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,11 +168,11 @@ public class FinanceUI extends javax.swing.JFrame {
         });
 
         jButton5.setBackground(new java.awt.Color(153, 204, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/iconfinder_Refresh_132187.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Refresh_132187.png"))); // NOI18N
         jButton5.setText("Update");
 
         jButton6.setBackground(new java.awt.Color(153, 204, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/iconfinder_Delete_132192.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Delete_132192.png"))); // NOI18N
         jButton6.setText("Delete");
 
         tMethodjComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Method", "Cash", "Online", "Cheque" }));
@@ -291,15 +291,15 @@ public class FinanceUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(153, 204, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/iconfinder_Search_132289.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Search_132289.png"))); // NOI18N
         jButton1.setText("Search");
 
         jButton2.setBackground(new java.awt.Color(153, 204, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/iconfinder_Print_132184.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Print_132184.png"))); // NOI18N
         jButton2.setText("Print");
 
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance/interfaces/pdf.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/pdf.png"))); // NOI18N
         jButton3.setText("PDF");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -323,7 +323,7 @@ public class FinanceUI extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(

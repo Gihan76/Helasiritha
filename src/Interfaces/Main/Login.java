@@ -10,7 +10,7 @@ import Connection.DBconnect;
 import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EventManagement.EventHome;
-import Interfaces.FinancialManagement.MainUI;
+import Interfaces.FinancialManagement.FinanceUI;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -244,7 +244,7 @@ public class Login extends javax.swing.JFrame {
                     cst.back.setText("logout");
                 }else if(rs.getString("role").equals(financialRole)){
                     this.dispose();
-                    MainUI ui = new MainUI();
+                    FinanceUI ui = new FinanceUI();
                     ui.setVisible(true);
                 }
             }else{
