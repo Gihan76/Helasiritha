@@ -39,8 +39,9 @@ public class FinanceUI extends javax.swing.JFrame {
         String sql = "SELECT name,date,price,type,method,status FROM finance";
         pst = conn.prepareStatement(sql);
         rs = pst.executeQuery();
-        
+        //view results in table
         jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+        
         }catch(Exception e){
         }
     }
