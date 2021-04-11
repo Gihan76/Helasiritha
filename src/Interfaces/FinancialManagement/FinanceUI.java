@@ -198,6 +198,11 @@ public class FinanceUI extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(153, 204, 255));
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Delete_132192.png"))); // NOI18N
         jButton6.setText("Delete");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         tMethodjComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Method", "Cash", "Online", "Cheque" }));
         tMethodjComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -504,6 +509,25 @@ public class FinanceUI extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       int d = JOptionPane.showConfirmDialog(null,"Do you really want to delete this record ?");
+       
+       if(d==0){
+       String name = nameBox.getText();
+       String de_sql = "DELETE FROM finance WHERE name='"+name+"'";
+       
+       try{
+           pst =conn.prepareStatement(de_sql);
+           pst.execute();
+           
+          viewTable();
+          JOptionPane.showMessageDialog(null,"Record has successfully deleted");
+       }catch(Exception e){
+       }
+       }
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
