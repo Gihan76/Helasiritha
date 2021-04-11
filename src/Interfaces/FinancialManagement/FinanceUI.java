@@ -343,6 +343,11 @@ public class FinanceUI extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(153, 204, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Search_132289.png"))); // NOI18N
         jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(153, 204, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Print_132184.png"))); // NOI18N
@@ -528,6 +533,21 @@ public class FinanceUI extends javax.swing.JFrame {
        }
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String name = jTextField9.getText();
+        
+        String se_sql = "SELECT name,date,price,type,method,status FROM finance WHERE name ='"+name+"'";
+        
+        try{
+             pst = conn.prepareStatement(se_sql);
+            rs = pst.executeQuery();
+            //view results in table
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
