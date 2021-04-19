@@ -17,6 +17,7 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,6 +69,10 @@ public class EventHome extends javax.swing.JFrame {
         //---------------------------tabeload-----------------------------------
         tableloadView();
         tableloadManage();
+        //-------------------------list orders to jcombobox---------------------
+        listOrder();
+        //-------------------------Set Icon for Event Jframe--------------------
+        setEventApplicationIcon();
         
     }
     
@@ -97,6 +102,27 @@ public class EventHome extends javax.swing.JFrame {
             System.out.println(e);
         }
         
+    }
+    
+    // list all orders from the order_management table to the event jframe combo box    
+    public void listOrder(){
+        try {
+            String sql = "SELECT * from order_management";
+            preparedStatement = con.prepareStatement(sql);
+            rs = preparedStatement.executeQuery();
+            
+            while(rs.next()){
+                String orderName = rs.getString("o_customer_name");
+                jComboBoxOrder.addItem(orderName);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    // set jframe application icon
+    private void setEventApplicationIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("event.png")));
     }
 
     /**
@@ -240,7 +266,7 @@ public class EventHome extends javax.swing.JFrame {
         jSpinner2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jComboBoxOrder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxOrder.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxOrder.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Order" }));
 
         jButtonAdd.setBackground(java.awt.Color.blue);
         jButtonAdd.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
@@ -502,6 +528,7 @@ public class EventHome extends javax.swing.JFrame {
         //----------------converting ending time format-------------------------
         SimpleDateFormat TimeFormat1 = new SimpleDateFormat("HH:mm:ss");
         String ETime = TimeFormat1.format(jSpinner2.getValue());
+        //----------------------------------------getSelectedOrderId--------------------------------------------
         String Order = jComboBoxOrder.getSelectedItem().toString();
         
         if (Address.trim().length() == 0 && Date == null) {
