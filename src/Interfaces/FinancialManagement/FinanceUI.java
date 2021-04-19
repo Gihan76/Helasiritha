@@ -356,6 +356,11 @@ public class FinanceUI extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/pdf.png"))); // NOI18N
         jButton3.setText("PDF");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -448,6 +453,25 @@ public class FinanceUI extends javax.swing.JFrame {
     String method = tMethodjComboBox1.getSelectedItem().toString();
     String status = tStatusjComboBox1.getSelectedItem().toString();
      
+         
+        if(name.equals("") && name.equals("") && date.equals("") && price.equals("") && type.equals("") && method.equals("")&& status.equals("")){
+            JOptionPane.showMessageDialog(null, "All Feilds Must be Filled");
+        }
+        else if(name.equals("")){
+            JOptionPane.showMessageDialog(null, "Please Enter The Name of the person who involeve for the Fianancial Business");
+        }else if(date.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill Date");
+        }else if(price.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill price");
+        }else if(type.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill the type of transaction");
+        }else if(method.equals("")){
+            JOptionPane.showMessageDialog(null, "Please select the method transaction happened");
+        }else if(status.equals("")){
+            JOptionPane.showMessageDialog(null, "Please select the status of transaction");
+        }
+        else{
+
     try{
         String addFinance = "INSERT INTO finance(name,date,price,type,method,status)VALUES('"+name+"','"+date+"','"+price+"','"+type+"','"+method+"','"+status+"')";
         pst = conn.prepareStatement(addFinance);
@@ -458,6 +482,7 @@ public class FinanceUI extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(null,"Financial Business Added Successfully!");
         }catch(Exception e){
+        }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -548,6 +573,10 @@ public class FinanceUI extends javax.swing.JFrame {
         }catch(Exception e){
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
