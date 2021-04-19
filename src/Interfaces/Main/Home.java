@@ -9,6 +9,7 @@ package Interfaces.Main;
 import Connection.DBconnect;
 import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
+import Interfaces.EmployeeManagement.Employee_home;
 import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
 import Interfaces.StoreManagement.StoreHome;
@@ -246,7 +247,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeliveryActionPerformed
 
     private void jButtonEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmployeeActionPerformed
-        JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+       // JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+       Employee_home emp = new Employee_home();
+       emp.setVisible(true);
     }//GEN-LAST:event_jButtonEmployeeActionPerformed
 
     private void jButtonOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrderActionPerformed
