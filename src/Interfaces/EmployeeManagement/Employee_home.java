@@ -6,9 +6,19 @@
 package Interfaces.EmployeeManagement;
 
 import Connection.DBconnect;
+import Interfaces.Main.Home;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -66,7 +76,7 @@ public class Employee_home extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        home = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -87,6 +97,7 @@ public class Employee_home extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         search = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        pdfbtn = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,8 +130,13 @@ public class Employee_home extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
-        jButton4.setText("Home");
+        home.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        home.setText("Home");
+        home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Full Name");
@@ -200,16 +216,26 @@ public class Employee_home extends javax.swing.JFrame {
             }
         });
 
+        pdfbtn.setText("GET PDF");
+        pdfbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfbtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pdfbtn))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jButton4)
+                        .addComponent(home)
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -263,7 +289,7 @@ public class Employee_home extends javax.swing.JFrame {
                                 .addGap(61, 61, 61)
                                 .addComponent(jButton3)
                                 .addGap(78, 78, 78))))
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
@@ -273,7 +299,7 @@ public class Employee_home extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(home)
                     .addComponent(jButton5)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
@@ -302,12 +328,14 @@ public class Employee_home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pdfbtn)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -445,6 +473,78 @@ public class Employee_home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
+        // home page button:
+        
+         Home home = new Home();
+        home.setVisible(true);
+    }//GEN-LAST:event_homeActionPerformed
+
+    private void pdfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfbtnActionPerformed
+        // Generate a pdf report
+        
+        String path="";
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfilechooser.showSaveDialog(this);
+        
+        if(x==JFileChooser.APPROVE_OPTION){
+            path=jfilechooser.getSelectedFile().getPath();
+        }
+        
+        Document document = new Document();
+        
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(path+"Employee.pdf"));
+                  document.open();
+                  
+                PdfPTable table2 = new PdfPTable(7);
+               
+            //adding headers
+            table2.addCell("EID");
+            table2.addCell("Name");
+            table2.addCell("Address");
+            table2.addCell("Contact no");
+            table2.addCell("NIC");
+            table2.addCell("Birthday");
+            table2.addCell("Salary");
+            
+            for (int r = 0; r < Table1.getRowCount(); r++){
+                
+        String id = Table1.getValueAt(r, 0).toString();
+        String Name = Table1.getValueAt(r, 1).toString();
+        String Address = Table1.getValueAt(r, 2).toString();
+        String Contact_no = Table1.getValueAt(r, 3).toString();
+        String NIC = Table1.getValueAt(r, 4).toString();
+        String Birthday = Table1.getValueAt(r, 5).toString();
+        String Salary = Table1.getValueAt(r, 6).toString();
+                
+                table2.addCell(id);
+                table2.addCell(Name);
+                table2.addCell(Address);
+                table2.addCell(Contact_no);
+                table2.addCell(NIC);
+                table2.addCell(Birthday);
+                table2.addCell(Salary);
+                
+                           }
+            document.add(table2);
+            JOptionPane.showMessageDialog(null, "Download PDF");
+            } catch (DocumentException ex) {
+                Logger.getLogger(Employee_home.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("e");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Employee_home.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("e");
+        }
+        
+        document.close();
+                          
+    }//GEN-LAST:event_pdfbtnActionPerformed
+
    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -484,10 +584,10 @@ public class Employee_home extends javax.swing.JFrame {
     private javax.swing.JTextField bbb;
     private javax.swing.JTextField contact_no;
     private javax.swing.JTextField eid;
+    private javax.swing.JButton home;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -502,6 +602,7 @@ public class Employee_home extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField name;
     private javax.swing.JTextField nic;
+    private javax.swing.JButton pdfbtn;
     private javax.swing.JTextField sal;
     private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
