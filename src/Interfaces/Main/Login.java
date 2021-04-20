@@ -11,6 +11,7 @@ import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
+import Interfaces.OrderManagement.OrderHome;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -236,7 +237,10 @@ public class Login extends javax.swing.JFrame {
                 }else if(rs.getString("role").equals(employeeRole)){
                     JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                 }else if(rs.getString("role").equals(orderRole)){
-                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                    //JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                    this.dispose();
+                    OrderHome oh = new OrderHome();
+                    oh.setVisible(true);
                 }else if(rs.getString("role").equals(customerRole)){
                     this.dispose();
                     CustomerHome cst = new CustomerHome();

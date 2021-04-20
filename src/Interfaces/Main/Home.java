@@ -12,6 +12,7 @@ import Interfaces.DeliveryManagement.DeliveryHome;
 import Interfaces.EmployeeManagement.Employee_home;
 import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
+import Interfaces.OrderManagement.OrderHome;
 import Interfaces.StoreManagement.StoreHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -253,7 +254,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEmployeeActionPerformed
 
     private void jButtonOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrderActionPerformed
-        JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+        //JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+        OrderHome oh = new OrderHome();
+        oh.setVisible(true);
     }//GEN-LAST:event_jButtonOrderActionPerformed
 
     private void jButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustomerActionPerformed
