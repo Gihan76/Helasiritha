@@ -9,6 +9,7 @@ package Interfaces.Main;
 import Connection.DBconnect;
 import Interfaces.CustomerManagement.CustomerHome;
 import Interfaces.DeliveryManagement.DeliveryHome;
+import Interfaces.EmployeeManagement.Employee_home;
 import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
 import Interfaces.OrderManagement.OrderHome;
@@ -242,7 +243,10 @@ public class Login extends javax.swing.JFrame {
                     DeliveryHome dh = new DeliveryHome();
                     dh.setVisible(true);
                 }else if(rs.getString("role").equals(employeeRole)){
-                    JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                   // JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
+                   this.dispose();
+                    Employee_home emp = new Employee_home();
+                    emp.setVisible(true);
                 }else if(rs.getString("role").equals(orderRole)){
                     //JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                     this.dispose();
