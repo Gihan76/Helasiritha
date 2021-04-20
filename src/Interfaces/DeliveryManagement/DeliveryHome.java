@@ -1,6 +1,7 @@
 package Interfaces.DeliveryManagement;
 
 import Connection.DBconnect;
+import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +38,9 @@ public class DeliveryHome extends javax.swing.JFrame {
         tableload();
         
         listOrder();
+        
+        //set Delivery jframe Icon
+        setDelApplicationIcon();
     }
     
     public void tableload(){
@@ -71,8 +75,11 @@ public class DeliveryHome extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-
     
+    public void setDelApplicationIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("package.png")));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
