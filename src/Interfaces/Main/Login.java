@@ -13,6 +13,7 @@ import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
 import Interfaces.OrderManagement.OrderHome;
 import Interfaces.StoreManagement.StoreHome;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,6 +41,8 @@ public class Login extends javax.swing.JFrame {
         con = DBconnect.connect();
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        //-----------------------set login jframe Icon--------------------------
+        setLoginApplicationIcon();
     }
 
     /**
@@ -189,8 +192,12 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setLoginApplicationIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("lock.png")));
+    }
+    
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        
+   
         this.dispose();
         SignUp sign = new SignUp();
         sign.setVisible(true);

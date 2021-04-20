@@ -7,6 +7,7 @@
 package Interfaces.Main;
 
 import Connection.DBconnect;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,6 +35,12 @@ public class SignUp extends javax.swing.JFrame {
         con = DBconnect.connect();
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        //------------------------set signup jframe icon------------------------
+        setSignUpApplicationIcon();
+    }
+    
+    private void setSignUpApplicationIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("key.png")));
     }
     
     // function to check if the username already exist in database table
