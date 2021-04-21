@@ -897,7 +897,6 @@ public class EventHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPdfForIdActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        Home h = new Home();
         Login l = new Login();
         String home = "Home";
         String logout = "Logout";
@@ -907,7 +906,6 @@ public class EventHome extends javax.swing.JFrame {
             l.setVisible(true);
         } else if(jButtonBack.getText().equals(home)){
             this.dispose();
-            h.setVisible(true);
         }
     }//GEN-LAST:event_jButtonBackActionPerformed
 

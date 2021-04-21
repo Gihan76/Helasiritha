@@ -14,6 +14,7 @@ import Interfaces.EventManagement.EventHome;
 import Interfaces.FinancialManagement.FinanceUI;
 import Interfaces.OrderManagement.OrderHome;
 import Interfaces.StoreManagement.StoreHome;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +39,8 @@ public class Home extends javax.swing.JFrame {
         con = DBconnect.connect();
         //---------set the JFrame to maximize by default on opening-------------
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        //--------------------set home jframe icon-------------------------
+        setHomeApplicationIcon();
     }
 
     /**
@@ -231,7 +234,10 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void setHomeApplicationIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("app-icon.png")));
+    }
+    
     private void jButtonEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEventActionPerformed
         EventHome eh = new EventHome();
         eh.setVisible(true);
