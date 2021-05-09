@@ -321,6 +321,9 @@
           <Font name="Times New Roman" size="24" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nametxtKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="categorytxt">
       <Properties>
@@ -328,6 +331,9 @@
           <Font name="Times New Roman" size="24" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="categorytxtKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="quantitytxt">
       <Properties>
@@ -337,6 +343,7 @@
       </Properties>
       <Events>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantitytxtKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantitytxtKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -377,6 +384,9 @@
           <Font name="Times New Roman" size="24" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pricetxtKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="manufacturedtxt">
       <Properties>
@@ -533,7 +543,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Interfaces/StoreManagement/iconfinder_Home_132240.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="HOME"/>
+        <Property name="text" type="java.lang.String" value="LogOut"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>

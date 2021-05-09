@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,11 +7,13 @@ package Interfaces.StoreManagement;
 
 import Connection.DBconnect;
 import Interfaces.Main.Home;
+import Interfaces.Main.Login;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -45,6 +47,8 @@ public class StoreHome extends javax.swing.JFrame {
        
         tableload();
     }
+    
+    
         public void tableload()
     {
         try{
@@ -58,6 +62,7 @@ public class StoreHome extends javax.swing.JFrame {
             
         }
     }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,13 +160,26 @@ public class StoreHome extends javax.swing.JFrame {
         codetxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
 
         nametxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        nametxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nametxtKeyTyped(evt);
+            }
+        });
 
         categorytxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        categorytxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                categorytxtKeyTyped(evt);
+            }
+        });
 
         quantitytxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         quantitytxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 quantitytxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                quantitytxtKeyTyped(evt);
             }
         });
 
@@ -178,6 +196,11 @@ public class StoreHome extends javax.swing.JFrame {
         jLabel10.setText("Event");
 
         pricetxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        pricetxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pricetxtKeyTyped(evt);
+            }
+        });
 
         manufacturedtxt.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
 
@@ -227,7 +250,7 @@ public class StoreHome extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/StoreManagement/iconfinder_Home_132240.png"))); // NOI18N
-        jButton3.setText("HOME");
+        jButton3.setText("LogOut");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -584,8 +607,10 @@ public class StoreHome extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Home home = new Home();
-        home.setVisible(true);
+       
+        Login login = new Login();
+        login.setVisible(true);
+      
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void quantitytxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantitytxtKeyReleased
@@ -602,6 +627,38 @@ public class StoreHome extends javax.swing.JFrame {
         }
         * */
     }//GEN-LAST:event_quantitytxtKeyReleased
+
+    private void quantitytxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantitytxtKeyTyped
+        char c=evt.getKeyChar();
+        if(! (Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_quantitytxtKeyTyped
+
+    private void pricetxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pricetxtKeyTyped
+               char c=evt.getKeyChar();
+        if(! (Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_pricetxtKeyTyped
+
+    private void nametxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nametxtKeyTyped
+                 char c=evt.getKeyChar();
+        if(! (Character.isAlphabetic(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_nametxtKeyTyped
+
+    private void categorytxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_categorytxtKeyTyped
+         char c=evt.getKeyChar();
+        if(! (Character.isAlphabetic(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_categorytxtKeyTyped
 
     /**
      * @param args the command line arguments
