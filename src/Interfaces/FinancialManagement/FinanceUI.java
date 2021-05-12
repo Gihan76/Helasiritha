@@ -6,9 +6,19 @@
 package Interfaces.FinancialManagement;
 
 import Connection.DBconnect;
+//import Interfaces.StoreManagement.StoreHome;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -423,10 +433,6 @@ public class FinanceUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tIDboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIDboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tIDboxActionPerformed
-
     private void tTypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTypeBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tTypeBoxActionPerformed
@@ -576,7 +582,70 @@ public class FinanceUI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         String path="";
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfilechooser.showSaveDialog(this);
+        
+        if(x==JFileChooser.APPROVE_OPTION){
+            path=jfilechooser.getSelectedFile().getPath();
+        }
+        
+        Document document = new Document();
+        
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(path+"Finacial.pdf"));
+                  document.open();
+                  
+                PdfPTable tbl = new PdfPTable(9);
+               
+            //adding headers
+            tbl.addCell("name");
+            tbl.addCell("date");
+            tbl.addCell("price");
+            tbl.addCell("type");
+            tbl.addCell("method");
+            tbl.addCell("status");
+           
+            
+            for (int i = 0; i < jTable1.getRowCount(); i++){
+                
+                String name = jTable1.getValueAt(i, 0).toString();
+                String date = jTable1.getValueAt(i, 1).toString();
+                String price = jTable1.getValueAt(i, 2).toString();
+                String type = jTable1.getValueAt(i, 3).toString();
+                String method = jTable1.getValueAt(i, 4).toString();
+                String status = jTable1.getValueAt(i, 5).toString();
+                
+                tbl.addCell(name);
+                tbl.addCell(date);
+                tbl.addCell(price);
+                tbl.addCell(name);
+                tbl.addCell(type);
+                tbl.addCell(method);
+                tbl.addCell(status);
+        
+                
+            }
+            document.add(tbl);
+            JOptionPane.showMessageDialog(null, "Download PDF");
+            } catch (DocumentException ex) {
+                Logger.getLogger(FinanceUI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("e");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FinanceUI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("e");
+        }
+        
+        document.close();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tIDboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIDboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tIDboxActionPerformed
 
     /**
      * @param args the command line arguments
