@@ -198,7 +198,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Interfaces/OrderManagement/P.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="PRINT"/>
+        <Property name="text" type="java.lang.String" value="PDF"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -369,6 +369,11 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="customerName">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerNameActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="customerNameKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="customerNameKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="orderPrice">
       <Events>
