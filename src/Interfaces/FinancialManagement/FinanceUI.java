@@ -11,6 +11,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -42,11 +44,25 @@ public class FinanceUI extends javax.swing.JFrame {
         
         //View Table
         viewTable();
+        jTable1.setRowHeight(40);
+        jTable1.getTableHeader().setFont(new java.awt.Font("Perpetua", java.awt.Font.BOLD, 15));
     }
 
+        
+    public void clear() {
+        nameBox.setText("");
+        dateBox.setText("");
+        dateBox1.setText("");
+        priceBox.setText("");
+        tTypeBox.setText("");
+        tMethodjComboBox1.setSelectedItem("Select Method");
+        tStatusjComboBox1.setSelectedItem("Select Status");
+    
+    }
+    
     public void viewTable(){
         try{
-        String sql = "SELECT invoice_code,date,due_date,invoice_size,type,method,status FROM finance";
+        String sql = "SELECT invoice_code as 'Invoice Code',date as 'Start Date',due_date as 'Due Date',invoice_size as 'Invoice Size(LKR)',type as 'Invoice Type',method as 'Paying Method',status as 'Status' FROM finance";
         pst = conn.prepareStatement(sql);
         rs = pst.executeQuery();
         //view results in table
@@ -54,6 +70,12 @@ public class FinanceUI extends javax.swing.JFrame {
         
         }catch(Exception e){
         }
+    }
+    
+      private void theader(){
+        JTableHeader thead = jTable1.getTableHeader();
+        thead.setForeground(Color.BLUE);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,7 +114,6 @@ public class FinanceUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -353,10 +374,6 @@ public class FinanceUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 204, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Print_132184.png"))); // NOI18N
-        jButton2.setText("Print");
-
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/pdf.png"))); // NOI18N
         jButton3.setText("PDF");
@@ -373,23 +390,20 @@ public class FinanceUI extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(212, 212, 212)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(132, 132, 132))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton2)
-                        .addGap(70, 70, 70))))
+                .addComponent(jTextField9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(132, 132, 132))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,11 +419,9 @@ public class FinanceUI extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(108, 108, 108)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
+                        .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(68, 68, 68))
         );
 
@@ -459,11 +471,14 @@ public class FinanceUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "All Feilds Must be Filled");
         }
         else if(name.equals("")){
-            JOptionPane.showMessageDialog(null, "Please Enter The Name of the person who involeve for the Fianancial Business");
+            JOptionPane.showMessageDialog(null, "Please Enter Invoice Code");
         }else if(date.equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill Date");
-        }else if(price.equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill price");
+            JOptionPane.showMessageDialog(null, "Please fill Start Date");
+        }else if(due_date.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill Due Date");
+        }
+        else if(price.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill Invoice Size");
         }else if(type.equals("")){
             JOptionPane.showMessageDialog(null, "Please fill the type of transaction");
         }else if(method.equals("")){
@@ -480,6 +495,9 @@ public class FinanceUI extends javax.swing.JFrame {
         
         //View Table
         viewTable();
+        
+        //clear
+        clear();
         
         JOptionPane.showMessageDialog(null,"Financial Business Added Successfully!");
         }catch(Exception e){
@@ -534,6 +552,8 @@ public class FinanceUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Record has successfully update");
             
             viewTable();
+            
+            clear();
          
             }catch(Exception e){
             }
@@ -557,6 +577,8 @@ public class FinanceUI extends javax.swing.JFrame {
            pst.execute();
            
           viewTable();
+          
+          clear();
           JOptionPane.showMessageDialog(null,"Record has successfully deleted");
        }catch(Exception e){
        }
@@ -690,7 +712,6 @@ public class FinanceUI extends javax.swing.JFrame {
     private javax.swing.JTextField dateBox;
     private javax.swing.JTextField dateBox1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
