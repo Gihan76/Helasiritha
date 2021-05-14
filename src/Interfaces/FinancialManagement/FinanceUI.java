@@ -48,7 +48,7 @@ public class FinanceUI extends javax.swing.JFrame {
         jTable1.getTableHeader().setFont(new java.awt.Font("Perpetua", java.awt.Font.BOLD, 15));
     }
 
-        
+    //Clear Form    
     public void clear() {
         nameBox.setText("");
         dateBox.setText("");
@@ -60,6 +60,7 @@ public class FinanceUI extends javax.swing.JFrame {
     
     }
     
+    //View Table
     public void viewTable(){
         try{
         String sql = "SELECT invoice_code as 'Invoice Code',date as 'Start Date',due_date as 'Due Date',invoice_size as 'Invoice Size(LKR)',type as 'Invoice Type',method as 'Paying Method',status as 'Status' FROM finance";
