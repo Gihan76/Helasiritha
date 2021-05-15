@@ -6,10 +6,22 @@
 package Interfaces.FinancialManagement;
 
 import Connection.DBconnect;
+//import Interfaces.StoreManagement.StoreHome;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -32,11 +44,26 @@ public class FinanceUI extends javax.swing.JFrame {
         
         //View Table
         viewTable();
+        jTable1.setRowHeight(40);
+        jTable1.getTableHeader().setFont(new java.awt.Font("Perpetua", java.awt.Font.BOLD, 15));
     }
 
+    //Clear Form    
+    public void clear() {
+        nameBox.setText("");
+        dateBox.setText("");
+        dateBox1.setText("");
+        priceBox.setText("");
+        tTypeBox.setText("");
+        tMethodjComboBox1.setSelectedItem("Select Method");
+        tStatusjComboBox1.setSelectedItem("Select Status");
+    
+    }
+    
+    //View Table
     public void viewTable(){
         try{
-        String sql = "SELECT name,date,price,type,method,status FROM finance";
+        String sql = "SELECT invoice_code as 'Invoice Code',date as 'Start Date',due_date as 'Due Date',invoice_size as 'Invoice Size(LKR)',type as 'Invoice Type',method as 'Paying Method',status as 'Status' FROM finance";
         pst = conn.prepareStatement(sql);
         rs = pst.executeQuery();
         //view results in table
@@ -44,6 +71,12 @@ public class FinanceUI extends javax.swing.JFrame {
         
         }catch(Exception e){
         }
+    }
+    
+      private void theader(){
+        JTableHeader thead = jTable1.getTableHeader();
+        thead.setForeground(Color.BLUE);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,14 +93,12 @@ public class FinanceUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        tIDbox = new javax.swing.JTextField();
         dateBox = new javax.swing.JTextField();
         nameBox = new javax.swing.JTextField();
         tTypeBox = new javax.swing.JTextField();
@@ -78,11 +109,12 @@ public class FinanceUI extends javax.swing.JFrame {
         tMethodjComboBox1 = new javax.swing.JComboBox<>();
         tStatusjComboBox1 = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        dateBox1 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -126,17 +158,14 @@ public class FinanceUI extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setText("Transaction ID");
-
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel6.setText("Name");
+        jLabel6.setText("Invoice Code");
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel4.setText("Date");
+        jLabel4.setText("Start Date");
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel7.setText("Price");
+        jLabel7.setText("Invoice Size (LKR)");
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel8.setText("Transaction Type");
@@ -146,12 +175,6 @@ public class FinanceUI extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel15.setText("Status");
-
-        tIDbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tIDboxActionPerformed(evt);
-            }
-        });
 
         dateBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,83 +244,86 @@ public class FinanceUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel5.setText("Due Date");
+
+        dateBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton7))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 1, Short.MAX_VALUE)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tStatusjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
                             .addComponent(jLabel14)
-                            .addComponent(jLabel15))
-                        .addGap(145, 145, 145)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dateBox)
                             .addComponent(nameBox)
-                            .addComponent(tIDbox)
                             .addComponent(tMethodjComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tStatusjComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tTypeBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(priceBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(priceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateBox1)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addGap(83, 83, 83)
                         .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                         .addComponent(jButton6)))
                 .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton7))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jButton7)
-                .addGap(53, 53, 53)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tIDbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dateBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel7))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(priceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(tTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(tMethodjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel14)))
-                        .addGap(20, 20, 20)
-                        .addComponent(tStatusjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel15))
-                .addGap(56, 56, 56)
+                    .addComponent(nameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(priceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14)
+                    .addComponent(tMethodjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(tStatusjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
@@ -349,10 +375,6 @@ public class FinanceUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 204, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/iconfinder_Print_132184.png"))); // NOI18N
-        jButton2.setText("Print");
-
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/FinancialManagement/pdf.png"))); // NOI18N
         jButton3.setText("PDF");
@@ -369,23 +391,20 @@ public class FinanceUI extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(212, 212, 212)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(132, 132, 132))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton2)
-                        .addGap(70, 70, 70))))
+                .addComponent(jTextField9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(132, 132, 132))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,11 +420,9 @@ public class FinanceUI extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(108, 108, 108)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
+                        .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(68, 68, 68))
         );
 
@@ -422,10 +439,6 @@ public class FinanceUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tIDboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tIDboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tIDboxActionPerformed
 
     private void tTypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTypeBoxActionPerformed
         // TODO add your handling code here:
@@ -448,6 +461,7 @@ public class FinanceUI extends javax.swing.JFrame {
     
     String name = nameBox.getText();
     String date = dateBox.getText();
+    String due_date = dateBox1.getText();
     String price = priceBox.getText();
     String type = tTypeBox.getText();
     String method = tMethodjComboBox1.getSelectedItem().toString();
@@ -458,11 +472,14 @@ public class FinanceUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "All Feilds Must be Filled");
         }
         else if(name.equals("")){
-            JOptionPane.showMessageDialog(null, "Please Enter The Name of the person who involeve for the Fianancial Business");
+            JOptionPane.showMessageDialog(null, "Please Enter Invoice Code");
         }else if(date.equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill Date");
-        }else if(price.equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill price");
+            JOptionPane.showMessageDialog(null, "Please fill Start Date");
+        }else if(due_date.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill Due Date");
+        }
+        else if(price.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill Invoice Size");
         }else if(type.equals("")){
             JOptionPane.showMessageDialog(null, "Please fill the type of transaction");
         }else if(method.equals("")){
@@ -473,12 +490,15 @@ public class FinanceUI extends javax.swing.JFrame {
         else{
 
     try{
-        String addFinance = "INSERT INTO finance(name,date,price,type,method,status)VALUES('"+name+"','"+date+"','"+price+"','"+type+"','"+method+"','"+status+"')";
+        String addFinance = "INSERT INTO finance(invoice_code,date,due_date,invoice_size,type,method,status)VALUES('"+name+"','"+date+"','"+due_date+"','"+price+"','"+type+"','"+method+"','"+status+"')";
         pst = conn.prepareStatement(addFinance);
         pst.execute();
         
         //View Table
         viewTable();
+        
+        //clear
+        clear();
         
         JOptionPane.showMessageDialog(null,"Financial Business Added Successfully!");
         }catch(Exception e){
@@ -495,13 +515,15 @@ public class FinanceUI extends javax.swing.JFrame {
         
         String name = jTable1.getValueAt(row, 0).toString();
         String date = jTable1.getValueAt(row, 1).toString();
-        String price = jTable1.getValueAt(row, 2).toString();
-        String type = jTable1.getValueAt(row, 3).toString();
-        String method = jTable1.getValueAt(row, 4).toString();
-        String status = jTable1.getValueAt(row, 5).toString();
+        String due_date = jTable1.getValueAt(row, 2).toString();
+        String price = jTable1.getValueAt(row, 3).toString();
+        String type = jTable1.getValueAt(row, 4).toString();
+        String method = jTable1.getValueAt(row, 5).toString();
+        String status = jTable1.getValueAt(row, 6).toString();
         
         nameBox.setText(name);
         dateBox.setText(date);
+        dateBox1.setText(due_date);
         priceBox.setText(price);
         tTypeBox.setText(type);
         tMethodjComboBox1.setSelectedItem(method);
@@ -517,18 +539,22 @@ public class FinanceUI extends javax.swing.JFrame {
         if(c==0){
             String name = nameBox.getText();
             String date = dateBox.getText();
+            String due_date = dateBox1.getText();
             String price = priceBox.getText();
             String type = tTypeBox.getText();
             String method = tMethodjComboBox1.getSelectedItem().toString();
             String status = tStatusjComboBox1.getSelectedItem().toString();
             
-            String sql = "UPDATE finance SET name='"+name+"',date='"+date+"',price='"+price+"',type='"+type+"',method='"+method+"',status='"+status+"' where name='"+name+"'";
+            String sql = "UPDATE finance SET invoice_code='"+name+"',date='"+date+"',due_date='"+due_date+"',invoice_size='"+price+"',type='"+type+"',method='"+method+"',status='"+status+"' where invoice_code='"+name+"'";
             
             try{
             pst  = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Record has successfully update");
+            
             viewTable();
+            
+            clear();
          
             }catch(Exception e){
             }
@@ -545,13 +571,15 @@ public class FinanceUI extends javax.swing.JFrame {
        
        if(d==0){
        String name = nameBox.getText();
-       String de_sql = "DELETE FROM finance WHERE name='"+name+"'";
+       String de_sql = "DELETE FROM finance WHERE invoice_code='"+name+"'";
        
        try{
            pst =conn.prepareStatement(de_sql);
            pst.execute();
            
           viewTable();
+          
+          clear();
           JOptionPane.showMessageDialog(null,"Record has successfully deleted");
        }catch(Exception e){
        }
@@ -562,7 +590,7 @@ public class FinanceUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = jTextField9.getText();
         
-        String se_sql = "SELECT name,date,price,type,method,status FROM finance WHERE name ='"+name+"'";
+        String se_sql = "SELECT invoice_code,date,due_date,invoice_size,type,method,status FROM finance WHERE invoice_code ='"+name+"'";
         
         try{
              pst = conn.prepareStatement(se_sql);
@@ -574,9 +602,76 @@ public class FinanceUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //PDF downloader
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         String path="";
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfilechooser.showSaveDialog(this);
+        
+        if(x==JFileChooser.APPROVE_OPTION){
+            path=jfilechooser.getSelectedFile().getPath();
+        }
+        
+        Document document = new Document();
+        
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(path+"Finacial.pdf"));
+                  document.open();
+                  
+                PdfPTable tbl = new PdfPTable(9);
+               
+            //adding headers
+            tbl.addCell("Invoice Code");
+            tbl.addCell("Start Date");
+            tbl.addCell("Due Date");
+            tbl.addCell("Invoice Size(LKR)");
+            tbl.addCell("Invoice Type");
+            tbl.addCell("Paying Method");
+            tbl.addCell("Invoice Status");
+           
+            
+            for (int i = 0; i < jTable1.getRowCount(); i++){
+                
+                String name = jTable1.getValueAt(i, 0).toString();
+                String date = jTable1.getValueAt(i, 1).toString();
+                String due_date = jTable1.getValueAt(i, 2).toString();
+                String price = jTable1.getValueAt(i, 3).toString();
+                String type = jTable1.getValueAt(i, 4).toString();
+                String method = jTable1.getValueAt(i, 5).toString();
+                String status = jTable1.getValueAt(i, 6).toString();
+                
+                tbl.addCell(name);
+                tbl.addCell(date);
+                tbl.addCell(due_date);
+                tbl.addCell(price);
+                tbl.addCell(name);
+                tbl.addCell(type);
+                tbl.addCell(method);
+                tbl.addCell(status);
+        
+                
+            }
+            document.add(tbl);
+            JOptionPane.showMessageDialog(null, "Download PDF");
+            } catch (DocumentException ex) {
+                Logger.getLogger(FinanceUI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("e");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FinanceUI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("e");
+        }
+        
+        document.close();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void dateBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -616,8 +711,8 @@ public class FinanceUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField dateBox;
+    private javax.swing.JTextField dateBox1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -627,8 +722,8 @@ public class FinanceUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -641,7 +736,6 @@ public class FinanceUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField priceBox;
-    private javax.swing.JTextField tIDbox;
     private javax.swing.JComboBox<String> tMethodjComboBox1;
     private javax.swing.JComboBox<String> tStatusjComboBox1;
     private javax.swing.JTextField tTypeBox;

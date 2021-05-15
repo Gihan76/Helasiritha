@@ -531,9 +531,25 @@ public class EventHome extends javax.swing.JFrame {
         //----------------------------------------getSelectedOrderId--------------------------------------------
         String Order = jComboBoxOrder.getSelectedItem().toString();
         
-        if (Address.trim().length() == 0 && Date == null) {
-                JOptionPane.showMessageDialog(null,"Please fill all the fields!","Alert",JOptionPane.WARNING_MESSAGE);
-        } else {
+        //-------------------------getting hours out from STime and ETime--------------------------------------
+        String StartHour = STime.substring(0,2);
+        //System.out.println(StartHour);
+        String EndHour = ETime.substring(0,2);
+        //System.out.println(EndHour);
+        
+        if(Type == "Select an Event"){
+                JOptionPane.showMessageDialog(null,"Please select an event type!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if (Address.trim().length() == 0) {
+                JOptionPane.showMessageDialog(null,"Please fill the address!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(Date == null){
+                JOptionPane.showMessageDialog(null,"Please fill the date!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(Integer.parseInt(StartHour) > Integer.parseInt(EndHour)){
+                JOptionPane.showMessageDialog(null,"Starting time cannont be lower than Ending time!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(Integer.parseInt(StartHour) == Integer.parseInt(EndHour)){
+                JOptionPane.showMessageDialog(null,"Starting and End time cannont be same!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(Order == "Select Order"){
+                JOptionPane.showMessageDialog(null,"Please select an order!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else {
             try {
                 //converting date format
                 DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -587,8 +603,26 @@ public class EventHome extends javax.swing.JFrame {
             SimpleDateFormat TimeFormat1 = new SimpleDateFormat("HH:mm:ss");
             String ETime = TimeFormat1.format(jSpinner2.getValue());
             String Order = jComboBoxOrder.getSelectedItem().toString();
+            //-------------------------getting hours out from STime and ETime--------------------------------------
+            String StartHour = STime.substring(0,2);
+            //System.out.println(StartHour);
+            String EndHour = ETime.substring(0,2);
+            //System.out.println(EndHour);
             
-            try {
+            if(Type == "Select an Event"){
+                JOptionPane.showMessageDialog(null,"Please select an event type!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else if (Address.trim().length() == 0) {
+                    JOptionPane.showMessageDialog(null,"Please fill the address!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else if(Date == null){
+                    JOptionPane.showMessageDialog(null,"Please fill the date!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else if(Integer.parseInt(StartHour) > Integer.parseInt(EndHour)){
+                    JOptionPane.showMessageDialog(null,"Starting time cannont be lower than Ending time!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else if(Integer.parseInt(StartHour) == Integer.parseInt(EndHour)){
+                    JOptionPane.showMessageDialog(null,"Starting and End time cannont be same!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else if(Order == "Select Order"){
+                    JOptionPane.showMessageDialog(null,"Please select an order!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else {
+                try {
                 String updateEvent = "UPDATE event SET id='"+Id+"',type='"+Type+"',address='"+Address+"',date='"+FormatedDate+"',start_time='"+STime+"',end_time='"+ETime+"',order_id='"+Order+"' WHERE id='"+Id+"'";
                 preparedStatement = con.prepareStatement(updateEvent);
                 preparedStatement.execute();
@@ -610,10 +644,12 @@ public class EventHome extends javax.swing.JFrame {
                 jButtonPdfForId.setText("Event ID");
                 //show success message
                 JOptionPane.showMessageDialog(null,"Event "+Id+" Updated Successfully!");
-            } 
-            catch (Exception e) {
-                System.out.println(e);  
-            } 
+                } 
+                catch (Exception e) {
+                    System.out.println(e);  
+                }
+            }
+             
         }
         
     }//GEN-LAST:event_jButtonUpdateActionPerformed

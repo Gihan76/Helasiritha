@@ -7,9 +7,19 @@ package Interfaces.OrderManagement;
 
 import Connection.DBconnect;
 import Interfaces.Main.Home;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import net.proteanit.sql.DbUtils;
@@ -106,7 +116,7 @@ public class OrderHome extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/OrderManagement/P.png"))); // NOI18N
-        jButton2.setText("PRINT");
+        jButton2.setText("PDF");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -184,6 +194,20 @@ public class OrderHome extends javax.swing.JFrame {
         search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchActionPerformed(evt);
+            }
+        });
+
+        customerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerNameActionPerformed(evt);
+            }
+        });
+        customerName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                customerNameKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                customerNameKeyTyped(evt);
             }
         });
 
@@ -334,6 +358,73 @@ public class OrderHome extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
+         String path="";
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfilechooser.showSaveDialog(this);
+        
+        if(x==JFileChooser.APPROVE_OPTION){
+            path=jfilechooser.getSelectedFile().getPath();
+        }
+        
+        Document document = new Document();
+        
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(path+"Order.pdf"));
+                  document.open();
+                  
+                PdfPTable tbl = new PdfPTable(7);
+               
+            //adding headers
+            tbl.addCell("ID");
+            tbl.addCell("Customer Name");
+            tbl.addCell("NIC");
+            tbl.addCell("Order Type");
+            tbl.addCell("Order Price");
+            tbl.addCell("Receive date");
+            tbl.addCell("Complete Date");
+
+            
+            for (int i = 0; i < Ordertable.getRowCount(); i++){
+                
+                String order_id  = Ordertable.getValueAt(i, 0).toString();
+                String o_customer_name = Ordertable.getValueAt(i, 1).toString();
+                String o_customer_nic = Ordertable.getValueAt(i, 2).toString();
+                String order_type = Ordertable.getValueAt(i, 3).toString();
+                String order_price = Ordertable.getValueAt(i, 4).toString();
+                String o_receive_date = Ordertable.getValueAt(i, 5).toString();
+                String o_complete_date = Ordertable.getValueAt(i, 6).toString();
+               
+                
+                tbl.addCell(order_id);
+                tbl.addCell(o_customer_name);
+                tbl.addCell(o_customer_nic);
+                tbl.addCell(order_type);
+                tbl.addCell(order_price);
+                tbl.addCell(o_receive_date);
+                tbl.addCell(o_complete_date);
+       
+                
+                
+                
+            }
+            document.add(tbl);
+            JOptionPane.showMessageDialog(null, "Download PDF");
+            } catch (DocumentException ex) {
+                Logger.getLogger(OrderHome.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("e");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OrderHome.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("e");
+        }
+        
+        document.close();
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void orderPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderPriceActionPerformed
@@ -479,6 +570,30 @@ public class OrderHome extends javax.swing.JFrame {
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void customerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameActionPerformed
+        // TODO add your handling code here:
+//        char c=evt.getKeyChar();
+//        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE)
+//                || c==KeyEvent.VK_DELETE)){
+//                getToolKit().beep();
+//                evt.consume();
+//        }
+        
+    }//GEN-LAST:event_customerNameActionPerformed
+
+    private void customerNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerNameKeyReleased
+
+    private void customerNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameKeyTyped
+        // TODO add your handling code here:
+               char c=evt.getKeyChar();
+        if(! (Character.isAlphabetic(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_customerNameKeyTyped
 
     /**
      * @param args the command line arguments
