@@ -408,16 +408,22 @@ public class Employee_home extends javax.swing.JFrame {
         }
         else if(Name.equals("")){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee Name");
+            return;
         }else if(Contact_no.equals("")){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee Contact Number");
+            return;
         }else if(Address.equals("")){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee Address");
+            return;
         }else if(Birthday ==(null)){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee Birthday");
+            return;
         }else if(NIC.equals("")){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee NIC Number");
+            return;
         }else if(Salary.equals("")){
             JOptionPane.showMessageDialog(null, "Please Enter The Employee Salary");
+            return;
         }else if(!Contact_no.matches("^[0-9]*$") || Contact_no.length()!=10){
             JOptionPane.showMessageDialog(this, "Invalid Contact Number");
             return;
@@ -466,8 +472,9 @@ public class Employee_home extends javax.swing.JFrame {
          
        // String Birthday = b_date.getToolTipText();
         String Salary = sal.getText();
-        if(Name.equals("") && Address.equals("") && Contact_no.equals("") && NIC.equals("") && Birthday ==(null) && Salary.equals("")){
+        if(Name.equals("") || Address.equals("") || Contact_no.equals("") || NIC.equals("") || Birthday ==(null) || Salary.equals("")){
             JOptionPane.showMessageDialog(null, "Please Fill All Feilds");
+            return  ;
         }
        
         else if(!Contact_no.matches("^[0-9]*$") || Contact_no.length()!=10){
@@ -695,6 +702,7 @@ clear();
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Log out button
+        this.dispose();
            Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
