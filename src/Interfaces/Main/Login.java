@@ -242,6 +242,7 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                     DeliveryHome dh = new DeliveryHome();
                     dh.setVisible(true);
+                    dh.jButtonDhome.setText("Logout");
                 }else if(rs.getString("role").equals(employeeRole)){
                    // JOptionPane.showMessageDialog(null,"Still Not Developed","Alert",JOptionPane.WARNING_MESSAGE);
                    this.dispose();

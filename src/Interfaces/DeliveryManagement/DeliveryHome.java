@@ -1,6 +1,7 @@
 package Interfaces.DeliveryManagement;
 
 import Connection.DBconnect;
+import Interfaces.Main.Login;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -122,6 +123,7 @@ public class DeliveryHome extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButtonDhome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
@@ -370,6 +372,13 @@ public class DeliveryHome extends javax.swing.JFrame {
                     .addContainerGap(533, Short.MAX_VALUE)))
         );
 
+        jButtonDhome.setText("Home");
+        jButtonDhome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDhomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -377,14 +386,18 @@ public class DeliveryHome extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(317, 317, 317))
+                .addGap(227, 227, 227)
+                .addComponent(jButtonDhome, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDhome, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -703,6 +716,22 @@ public class DeliveryHome extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"PDF Generated Successfully!");    
         
     }//GEN-LAST:event_jButton8ActionPerformed
+    
+    //Home Button
+    private void jButtonDhomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDhomeActionPerformed
+       
+        Login l = new Login();
+        String home = "Home";
+        String logout = "Logout";
+        
+        if (jButtonDhome.getText().equals(logout)) {
+            this.dispose();
+            l.setVisible(true);
+        } else if(jButtonDhome.getText().equals(home)){
+            this.dispose();
+        }
+       
+    }//GEN-LAST:event_jButtonDhomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -748,6 +777,7 @@ public class DeliveryHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    public javax.swing.JButton jButtonDhome;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
