@@ -1,14 +1,26 @@
 package Interfaces.DeliveryManagement;
 
 import Connection.DBconnect;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -109,6 +121,7 @@ public class DeliveryHome extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
@@ -149,7 +162,7 @@ public class DeliveryHome extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select the Item" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Order" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -175,6 +188,7 @@ public class DeliveryHome extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 204));
+        jButton1.setForeground(new java.awt.Color(51, 255, 51));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/DeliveryManagement/add.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,6 +240,13 @@ public class DeliveryHome extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaces/DeliveryManagement/pdf.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -242,17 +263,17 @@ public class DeliveryHome extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(194, 313, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jXDatePicker1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
-                        .addGap(30, 30, 30))
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 114, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(157, 157, 157)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(187, 187, 187)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,16 +283,20 @@ public class DeliveryHome extends javax.swing.JFrame {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(55, 55, 55))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(59, 59, 59)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(59, 59, 59)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(69, 69, 69))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
@@ -279,9 +304,9 @@ public class DeliveryHome extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(179, 179, 179)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(767, Short.MAX_VALUE)))
+                    .addGap(181, 181, 181)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(601, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,17 +317,18 @@ public class DeliveryHome extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel6)
+                                .addGap(27, 27, 27)
                                 .addComponent(jLabel7))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
+                                .addGap(39, 39, 39)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -313,31 +339,35 @@ public class DeliveryHome extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addComponent(jLabel9))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(15, 15, 15)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(48, 48, 48)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(519, Short.MAX_VALUE)))
+                    .addGap(37, 37, 37)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(533, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -380,28 +410,50 @@ public class DeliveryHome extends javax.swing.JFrame {
        
         String name = jTextField2.getText();
         String address = jTextArea1.getText();
-        
         Date date = jXDatePicker1.getDate();
-        DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String FormatedDate = DateFormat.format(date);
-        
         String fee = jTextField1.getText();
         String order = jComboBox1.getSelectedItem().toString();
         
-        try{
+        if (name.equals("")) {
+                JOptionPane.showMessageDialog(null,"Please fill customer name!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(address.trim().length()==0){
+                JOptionPane.showMessageDialog(null,"Please fill the address!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(date==null){
+                JOptionPane.showMessageDialog(null,"Please fill the date!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(fee.equals("")){
+                JOptionPane.showMessageDialog(null,"Please fill the fee!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(!fee.matches("\\d*(\\.\\d{0,2})?")){
+                JOptionPane.showMessageDialog(null,"Please fill the valid fee!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(order == "Select Order"){
+                JOptionPane.showMessageDialog(null,"Please select an order!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else{
+            try{
            
-            String add_sql =" INSERT INTO delivery (c_name,d_address,d_date,d_fee,order_id) values ('"+ name +"','"+ address +"','"+ FormatedDate +"','"+ fee +"','"+ order +"') ";
-            
-            pst = con.prepareStatement(add_sql);
-           
-            pst.execute();
-            
-            tableload();
-            
-        }
-        catch(Exception e){
-            
-            System.out.println(e);
+                DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String FormatedDate = DateFormat.format(date);
+                
+                String add_sql =" INSERT INTO delivery (c_name,d_address,d_date,d_fee,order_id) values ('"+ name +"','"+ address +"','"+ FormatedDate +"','"+ fee +"','"+ order +"') ";
+
+                pst = con.prepareStatement(add_sql);
+
+                pst.execute();
+
+                JOptionPane.showMessageDialog(null,"Delivery Added Successfully!");
+
+                tableload();
+
+                //set field values null
+                    jTextField2.setText("");
+                    jTextField1.setText("");
+                    jComboBox1.setSelectedIndex(0);
+                    jTextArea1.setText(null);
+                    jXDatePicker1.setDate(null);
+
+            }
+            catch(Exception e){
+
+                System.out.println(e);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -450,32 +502,48 @@ public class DeliveryHome extends javax.swing.JFrame {
         String id = jLabel4.getText();
         String name = jTextField2.getText();
         String address = jTextArea1.getText();
-        
         Date date = jXDatePicker1.getDate() ;
         DateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String FormatedDate = DateFormat.format(date);
-        
         String fee = jTextField1.getText();
         String order = jComboBox1.getSelectedItem().toString();
         
-        String update_sql = " UPDATE delivery set c_name ='"+ name +"',d_address ='"+ address +"' ,d_date ='"+ FormatedDate +"' ,d_fee ='"+ fee +"' ,order_id ='"+ order +"' where id ='"+ id +"' ";
-           
-        try{
-            
+        if (name.equals("")) {
+                JOptionPane.showMessageDialog(null,"Please fill customer name!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(address.trim().length()==0){
+                JOptionPane.showMessageDialog(null,"Please fill the address!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(date==null){
+                JOptionPane.showMessageDialog(null,"Please fill the date!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(fee.equals("")){
+                JOptionPane.showMessageDialog(null,"Please fill the fee!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(!fee.matches("\\d*(\\.\\d{0,2})?")){
+                JOptionPane.showMessageDialog(null,"Please fill the valid fee!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else if(order == "Select Order"){
+                JOptionPane.showMessageDialog(null,"Please select an order!","Alert",JOptionPane.WARNING_MESSAGE);
+        }else{
+            try{
+            String update_sql = " UPDATE delivery set c_name ='"+ name +"',d_address ='"+ address +"' ,d_date ='"+ FormatedDate +"' ,d_fee ='"+ fee +"' ,order_id ='"+ order +"' where id ='"+ id +"' ";
             pst = con.prepareStatement(update_sql);
-             pst.execute();
+            pst.execute();
         
+            JOptionPane.showMessageDialog(null,"Delivery Updated Successfully!");
             
-              tableload(); 
+            tableload(); 
+              
+            //set field values null
+            jTextField2.setText("");
+            jTextField1.setText("");
+            jComboBox1.setSelectedIndex(0);
+            jTextArea1.setText(null);
+            jXDatePicker1.setDate(null);
             
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
-        catch(Exception e){
-            
-            System.out.println(e);
-            
-        }
+        
              
-         }
+        }
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -576,6 +644,66 @@ public class DeliveryHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    //PDF
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+
+         String path = "";
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = jfc.showSaveDialog(this);
+        if(x == JFileChooser.APPROVE_OPTION){
+            path = jfc.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+        
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path+"DeliveryDetailsList.pdf"));
+            doc.open();
+            
+            //title of the pdf
+            Paragraph para = new Paragraph("Helasiritha Delivery Details List");
+            para.setAlignment(Element.ALIGN_CENTER);
+            
+            doc.add(para);
+            
+            // add a blank line
+            doc.add( Chunk.NEWLINE );
+            
+            PdfPTable tbl = new PdfPTable(6);
+            //table headers
+            tbl.addCell("Delivery ID");
+            tbl.addCell("Customer Name");
+            tbl.addCell("Delivery Address");
+            tbl.addCell("Delivery Date");
+            tbl.addCell("Delivery Fee");
+            tbl.addCell("Order ID");
+            
+            for(int i = 0; i < jTable1.getRowCount(); i++){
+                String Id = jTable1.getValueAt(i, 0).toString();
+                String Name = jTable1.getValueAt(i, 1).toString();
+                String Address = jTable1.getValueAt(i, 2).toString();
+                String Date = jTable1.getValueAt(i, 3).toString();
+                String Fee = jTable1.getValueAt(i, 4).toString();
+                String OrderId = jTable1.getValueAt(i, 5).toString();
+                
+                tbl.addCell(Id);
+                tbl.addCell(Name);
+                tbl.addCell(Address);
+                tbl.addCell(Date);
+                tbl.addCell(Fee);               
+                tbl.addCell(OrderId);
+            }
+            doc.add(tbl);
+              
+        } catch (FileNotFoundException | DocumentException ex) {
+            Logger.getLogger(DeliveryHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        doc.close();
+        JOptionPane.showMessageDialog(null,"PDF Generated Successfully!");    
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -619,6 +747,7 @@ public class DeliveryHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
