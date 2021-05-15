@@ -581,6 +581,13 @@ public class DeliveryHome extends javax.swing.JFrame {
                 
                 tableload();
                 
+                //set field values null
+                 jTextField2.setText("");
+                 jTextField1.setText("");
+                 jComboBox1.setSelectedIndex(0);
+                 jTextArea1.setText(null);
+                 jXDatePicker1.setDate(null);
+                
             }catch(Exception e){
                 System.out.println(e);
             }
@@ -633,10 +640,10 @@ public class DeliveryHome extends javax.swing.JFrame {
     //Clear
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
        
-        //jLabel4.setText("Delivery ID");
-        //jTextField2.setText(null);
+        jLabel4.setText("Delivery ID");
+        jTextField2.setText(null);
         jTextArea1.setText(null);
-        //jTextField1.setText(null);
+        jTextField1.setText(null);
         jComboBox1.setSelectedIndex(0);
         jXDatePicker1.setDate(null);
         
